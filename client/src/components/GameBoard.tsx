@@ -7,7 +7,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Player } from "../data/gameTypes";
-import { BOARD_SQUARES, SQUARE_THEMES } from "../data/gameTypes";
+import { BOARD_SQUARES, SQUARE_THEMES, getSpecialSquare } from "../data/gameTypes";
 
 interface GameBoardProps {
   players: Player[];
@@ -104,6 +104,7 @@ export default function GameBoard({
             const isHighlighted = highlightedSquare === squareIndex;
             const isStart = squareIndex === 0;
             const isEnd = squareIndex === BOARD_SQUARES - 1;
+            const specialSquare = getSpecialSquare(squareIndex);
 
             // Determine connector arrows
             const isRowEnd = (squareIndex + 1) % COLS === 0 && squareIndex < BOARD_SQUARES - 1;
@@ -120,6 +121,7 @@ export default function GameBoard({
                 isStart={isStart}
                 isEnd={isEnd}
                 animatingPlayers={animatingPlayers}
+                specialSquare={specialSquare}
                 onClick={() => onSquareClick?.(squareIndex)}
               />
             );
@@ -158,6 +160,7 @@ interface BoardSquareProps {
   isStart: boolean;
   isEnd: boolean;
   animatingPlayers: Set<number>;
+  specialSquare: any;
   onClick: () => void;
 }
 
@@ -170,10 +173,13 @@ function BoardSquare({
   isStart,
   isEnd,
   animatingPlayers,
+  specialSquare,
   onClick,
 }: BoardSquareProps) {
   const hasPawn = players.length > 0;
   const rgb = hexToRgb(theme.color);
+  const isBonus = specialSquare?.type === "bonus";
+  const isTrap = specialSquare?.type === "trap";
 
   return (
     <div
@@ -186,6 +192,10 @@ function BoardSquare({
           ? "rgba(0, 229, 255, 0.1)"
           : isEnd
           ? "rgba(255, 215, 0, 0.12)"
+          : isBonus
+          ? "rgba(255, 215, 0, 0.15)"
+          : isTrap
+          ? "rgba(255, 51, 102, 0.12)"
           : `rgba(${rgb}, 0.07)`,
         border: `1.5px solid ${
           isHighlighted
@@ -194,11 +204,19 @@ function BoardSquare({
             ? "#00E5FF"
             : isEnd
             ? "#FFD700"
+            : isBonus
+            ? "#FFD700"
+            : isTrap
+            ? "#FF3366"
             : theme.color + "70"
         }`,
         borderRadius: "3px",
         boxShadow: isHighlighted
           ? `0 0 14px #FFD700, 0 0 28px #FFD70060`
+          : isBonus
+          ? `0 0 10px #FFD700, 0 0 20px #FFD70060, inset 0 0 15px rgba(255,215,0,0.1)`
+          : isTrap
+          ? `0 0 10px #FF3366, 0 0 20px #FF336660, inset 0 0 15px rgba(255,51,102,0.1)`
           : hasPawn
           ? `0 0 8px ${players[0].glowColor}70`
           : `0 0 3px ${theme.color}25`,
@@ -233,7 +251,7 @@ function BoardSquare({
         className="relative z-10 text-center leading-none"
         style={{ fontSize: "clamp(0.7rem, 2vw, 1rem)", lineHeight: 1 }}
       >
-        {isEnd ? "🏆" : theme.icon}
+        {isEnd ? "🏆" : isBonus ? "⭐" : isTrap ? "⚠️" : theme.icon}
       </div>
 
       {/* Theme label */}
@@ -241,12 +259,12 @@ function BoardSquare({
         className="relative font-arcade text-center leading-none pb-0.5 z-10"
         style={{
           fontSize: "clamp(0.22rem, 0.7vw, 0.32rem)",
-          color: theme.color,
+          color: isBonus ? "#FFD700" : isTrap ? "#FF3366" : theme.color,
           opacity: 0.75,
           letterSpacing: "0.01em",
         }}
       >
-        {isStart ? "START" : isEnd ? "WIN" : theme.label}
+        {isStart ? "START" : isEnd ? "WIN" : isBonus ? "BÔNUS" : isTrap ? "TRAP" : theme.label}
       </div>
 
       {/* Player pawns overlay */}

@@ -9,6 +9,7 @@ interface FeedbackPopupProps {
   type: "correct" | "incorrect";
   explanation: string;
   penalty?: number;
+  specialMessage?: string;
   onClose: () => void;
 }
 
@@ -42,6 +43,7 @@ export default function FeedbackPopup({
   type,
   explanation,
   penalty,
+  specialMessage,
   onClose,
 }: FeedbackPopupProps) {
   const [particles, setParticles] = useState<Particle[]>([]);
@@ -167,7 +169,19 @@ export default function FeedbackPopup({
               >
                 {message}
               </div>
-              {!isCorrect && penalty && penalty > 0 && (
+              {specialMessage && (
+                <div
+                  className="font-vt323 mt-1"
+                  style={{
+                    fontSize: "1.1rem",
+                    color: specialMessage.includes("Avan") ? "#FFD700" : "#FF9AB5",
+                    textShadow: specialMessage.includes("Avan") ? "0 0 8px #FFD700" : "none",
+                  }}
+                >
+                  {specialMessage}
+                </div>
+              )}
+              {!specialMessage && !isCorrect && penalty && penalty > 0 && (
                 <div
                   className="font-vt323 mt-1"
                   style={{
@@ -178,7 +192,7 @@ export default function FeedbackPopup({
                   Recue {penalty} {penalty === 1 ? "casa" : "casas"}!
                 </div>
               )}
-              {isCorrect && (
+              {!specialMessage && isCorrect && (
                 <div
                   className="font-vt323 mt-1"
                   style={{

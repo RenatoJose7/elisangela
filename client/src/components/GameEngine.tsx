@@ -6,7 +6,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { GamePhase, GameState, Player } from "../data/gameTypes";
-import { BOARD_SQUARES, PLAYER_COLORS } from "../data/gameTypes";
+import { BOARD_SQUARES, PLAYER_COLORS, getSpecialSquare } from "../data/gameTypes";
 import { getQuestionForSquare } from "../data/questions";
 import GameBoard from "./GameBoard";
 import Dice from "./Dice";
@@ -35,6 +35,8 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
     feedbackMessage: "",
     totalSquares: BOARD_SQUARES,
     winner: null,
+    specialSquareTriggered: null,
+    playerSkipsTurn: false,
   });
 
   const [flashClass, setFlashClass] = useState("");
@@ -67,13 +69,29 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
       if (moveTimeoutRef.current) clearTimeout(moveTimeoutRef.current);
       moveTimeoutRef.current = setTimeout(() => {
         setGameState((prev) => {
-          const newPos = Math.min(
+          let newPos = Math.min(
             prev.players[prev.currentPlayerIndex].position + rolled,
             BOARD_SQUARES - 1
           );
-          const updatedPlayers = prev.players.map((p, i) =>
+          let updatedPlayers = prev.players.map((p, i) =>
             i === prev.currentPlayerIndex ? { ...p, position: newPos } : p
           );
+
+          const specialSquare = getSpecialSquare(newPos);
+          let specialSquareTriggered = null;
+          let playerSkipsTurn = false;
+
+          if (specialSquare) {
+            specialSquareTriggered = specialSquare;
+            if (specialSquare.type === "bonus") {
+              newPos = Math.min(newPos + 3, BOARD_SQUARES - 1);
+              updatedPlayers = updatedPlayers.map((p, i) =>
+                i === prev.currentPlayerIndex ? { ...p, position: newPos } : p
+              );
+            } else if (specialSquare.type === "trap") {
+              playerSkipsTurn = true;
+            }
+          }
 
           if (newPos >= BOARD_SQUARES - 1) {
             return {
@@ -81,6 +99,8 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
               players: updatedPlayers,
               phase: "game_over",
               winner: updatedPlayers[prev.currentPlayerIndex],
+              specialSquareTriggered,
+              playerSkipsTurn,
             };
           }
 
@@ -94,6 +114,8 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
             isCardFlipped: false,
             selectedAnswer: null,
             feedbackType: null,
+            specialSquareTriggered,
+            playerSkipsTurn,
           };
         });
       }, 700);
@@ -149,7 +171,11 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
         );
       }
 
-      const nextPlayerIndex = (prev.currentPlayerIndex + 1) % prev.players.length;
+      let nextPlayerIndex = (prev.currentPlayerIndex + 1) % prev.players.length;
+
+      if (prev.playerSkipsTurn) {
+        nextPlayerIndex = (nextPlayerIndex + 1) % prev.players.length;
+      }
 
       return {
         ...prev,
@@ -163,6 +189,8 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
         selectedAnswer: null,
         feedbackType: null,
         feedbackMessage: "",
+        specialSquareTriggered: null,
+        playerSkipsTurn: false,
       };
     });
   }, []);
@@ -439,6 +467,7 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
           type={gameState.feedbackType}
           explanation={gameState.currentQuestion.explanation}
           penalty={gameState.feedbackType === "incorrect" ? PENALTY_SQUARES : undefined}
+          specialMessage={gameState.specialSquareTriggered?.effect}
           onClose={handleCloseFeedback}
         />
       )}
