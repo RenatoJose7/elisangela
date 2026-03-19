@@ -183,11 +183,16 @@ export default function QuestionCard({
             </div>
           </div>
 
-          {/* Question text */}
+          {/* Question text and image */}
           <div
             className="px-4 py-3"
             style={{ borderBottom: `1px solid ${categoryColor}20` }}
           >
+            {question.image && (
+              <div className="mb-3 rounded-sm overflow-hidden" style={{ maxHeight: "120px", background: "rgba(123,47,255,0.1)", border: `1px solid ${categoryColor}30` }}>
+                <img src={question.image} alt="Pergunta" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              </div>
+            )}
             <p
               className="font-orbitron leading-relaxed"
               style={{

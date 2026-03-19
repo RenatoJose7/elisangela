@@ -26,6 +26,7 @@ export interface Question {
   options: string[];
   correctIndex: number;
   explanation: string;
+  image?: string;
 }
 
 export const CATEGORY_LABELS: Record<Category, string> = {

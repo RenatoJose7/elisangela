@@ -44,7 +44,7 @@ export default function StartScreen({ onStart }: StartScreenProps) {
 
       {/* Header image */}
       <div
-        className="w-full max-w-2xl mb-5 rounded-sm overflow-hidden animate-slide-down"
+        className="w-full max-w-xl mb-4 rounded-sm overflow-hidden animate-slide-down"
         style={{
           border: "2px solid #7B2FFF",
           boxShadow: "0 0 30px #7B2FFF60, 0 0 60px #7B2FFF30",
@@ -54,7 +54,7 @@ export default function StartScreen({ onStart }: StartScreenProps) {
           src={HEADER_URL}
           alt="Cosmic Cell Invasion"
           className="w-full object-cover"
-          style={{ maxHeight: "180px", objectPosition: "center 30%" }}
+          style={{ maxHeight: "120px", objectPosition: "center 30%" }}
         />
       </div>
 

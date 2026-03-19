@@ -87,10 +87,12 @@ export default function GameBoard({
 
       {/* Grid */}
       <div
-        className="grid gap-1 sm:gap-1.5"
+        className="grid"
         style={{
           gridTemplateColumns: `repeat(${COLS}, 1fr)`,
           gridTemplateRows: `repeat(${ROWS}, 1fr)`,
+          gap: "0.5rem 0.75rem",
+          rowGap: "1.5rem",
         }}
       >
         {Array.from({ length: ROWS }, (_, visualRow) => {
@@ -153,7 +155,7 @@ export default function GameBoard({
 
 interface BoardSquareProps {
   index: number;
-  theme: { label: string; color: string; icon: string; index: number };
+  theme: { label: string; color: string; icon: string; index: number; image?: string };
   players: Player[];
   currentPlayerIndex: number;
   isHighlighted: boolean;
@@ -187,7 +189,7 @@ function BoardSquare({
       className="relative flex flex-col items-center justify-between select-none transition-all duration-200"
       style={{
         aspectRatio: "1",
-        minHeight: "48px",
+        minHeight: "40px",
         background: isStart
           ? "rgba(0, 229, 255, 0.1)"
           : isEnd
@@ -246,12 +248,22 @@ function BoardSquare({
         {isStart ? "IN" : isEnd ? "FIM" : index}
       </div>
 
-      {/* Theme icon */}
+      {/* Theme icon / Image */}
       <div
         className="relative z-10 text-center leading-none"
-        style={{ fontSize: "clamp(0.7rem, 2vw, 1rem)", lineHeight: 1 }}
+        style={{ fontSize: "clamp(0.7rem, 2vw, 1rem)", lineHeight: 1, width: "100%", height: "auto" }}
       >
-        {isEnd ? "🏆" : isBonus ? "⭐" : isTrap ? "⚠️" : theme.icon}
+        {theme.image && !isBonus && !isTrap && !isEnd && !isStart ? (
+          <img src={theme.image} alt={theme.label} style={{ width: "90%", height: "auto", maxHeight: "2rem", objectFit: "contain" }} />
+        ) : isEnd ? (
+          "🏆"
+        ) : isBonus ? (
+          "⭐"
+        ) : isTrap ? (
+          "⚠️"
+        ) : (
+          theme.icon
+        )}
       </div>
 
       {/* Theme label */}
