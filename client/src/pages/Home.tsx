@@ -1,25 +1,63 @@
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
-
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
+/*
+ * Home — Página principal do Cosmic Cell Invasion
+ * Design: Arcade Cósmico Neon Brutalist
+ * Integra: StarField + StartScreen + GameEngine
  */
+
+import { useState } from "react";
+import type { Player } from "../data/gameTypes";
+import GameEngine from "../components/GameEngine";
+import StarField from "../components/StarField";
+import StartScreen from "../components/StartScreen";
+
 export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
+  const [gameStarted, setGameStarted] = useState(false);
+  const [players, setPlayers] = useState<Player[]>([]);
+
+  const handleStart = (newPlayers: Player[]) => {
+    setPlayers(newPlayers);
+    setGameStarted(true);
+  };
+
+  const handleExit = () => {
+    setGameStarted(false);
+    setPlayers([]);
+  };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
+    <div
+      className="min-h-screen relative"
+      style={{ background: "#0A0A1A" }}
+    >
+      {/* Animated star field background */}
+      <StarField />
+
+      {/* CRT scanlines overlay */}
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          background:
+            "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px)",
+          zIndex: 1,
+        }}
+      />
+
+      {/* Vignette effect */}
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%)",
+          zIndex: 1,
+        }}
+      />
+
+      {/* Game content */}
+      {!gameStarted ? (
+        <StartScreen onStart={handleStart} />
+      ) : (
+        <GameEngine initialPlayers={players} onExit={handleExit} />
+      )}
     </div>
   );
 }

@@ -1,3 +1,11 @@
+/*
+ * COSMIC CELL INVASION — Global Styles
+ * Design: Arcade Cósmico Neon Brutalist
+ * Paleta: Roxo elétrico (#7B2FFF), Verde bioluminescente (#00FF9F),
+ *         Ciano (#00E5FF), Fundo azul-noite (#0A0A1A)
+ * Tipografia: Press Start 2P (títulos), VT323 (jogo), Orbitron (perguntas)
+ */
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -27,131 +35,73 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Arcade Neon Custom Colors */
+  --neon-purple: oklch(0.45 0.35 290);
+  --neon-green: oklch(0.9 0.35 145);
+  --neon-cyan: oklch(0.85 0.2 195);
+  --neon-pink: oklch(0.65 0.3 350);
+  --neon-gold: oklch(0.85 0.2 85);
+  --neon-orange: oklch(0.75 0.25 45);
+  --dark-bg: oklch(0.08 0.02 265);
+  --dark-card: oklch(0.12 0.04 270);
+  --dark-border: oklch(0.25 0.08 270);
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
-}
-
-.dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+  --radius: 0.25rem;
+  --background: oklch(0.08 0.02 265);
+  --foreground: oklch(0.95 0.01 265);
+  --card: oklch(0.12 0.04 270);
+  --card-foreground: oklch(0.95 0.01 265);
+  --popover: oklch(0.1 0.04 270);
+  --popover-foreground: oklch(0.95 0.01 265);
+  --primary: oklch(0.45 0.35 290);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.18 0.06 270);
+  --secondary-foreground: oklch(0.85 0.05 265);
+  --muted: oklch(0.15 0.04 270);
+  --muted-foreground: oklch(0.6 0.05 265);
+  --accent: oklch(0.9 0.35 145);
+  --accent-foreground: oklch(0.08 0.02 265);
+  --destructive: oklch(0.65 0.3 350);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.25 0.08 270);
+  --input: oklch(0.18 0.06 270);
+  --ring: oklch(0.45 0.35 290);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    box-sizing: border-box;
   }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0A0A1A;
+    min-height: 100vh;
   }
+
   button:not(:disabled),
-  [role="button"]:not([aria-disabled="true"]),
-  [type="button"]:not(:disabled),
-  [type="submit"]:not(:disabled),
-  [type="reset"]:not(:disabled),
-  a[href],
-  select:not(:disabled),
-  input[type="checkbox"]:not(:disabled),
-  input[type="radio"]:not(:disabled) {
+  [role="button"]:not([aria-disabled="true"]) {
     @apply cursor-pointer;
   }
 }
 
 @layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
+    padding-left: 1rem;
     padding-right: 1rem;
   }
 
@@ -162,16 +112,424 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
+      padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      max-width: 1400px;
     }
+  }
+
+  /* ── Arcade Font Classes ─────────────────────────────── */
+  .font-arcade {
+    font-family: 'Press Start 2P', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .font-vt323 {
+    font-family: 'VT323', monospace;
+  }
+
+  .font-orbitron {
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  /* ── Neon Glow Effects ───────────────────────────────── */
+  .neon-purple {
+    text-shadow:
+      0 0 7px #7B2FFF,
+      0 0 10px #7B2FFF,
+      0 0 21px #7B2FFF,
+      0 0 42px #B44FFF;
+    color: #E0AAFF;
+  }
+
+  .neon-green {
+    text-shadow:
+      0 0 7px #00FF9F,
+      0 0 10px #00FF9F,
+      0 0 21px #00FF9F,
+      0 0 42px #69FF47;
+    color: #AFFFDF;
+  }
+
+  .neon-cyan {
+    text-shadow:
+      0 0 7px #00E5FF,
+      0 0 10px #00E5FF,
+      0 0 21px #00E5FF,
+      0 0 42px #7DF9FF;
+    color: #B3F9FF;
+  }
+
+  .neon-gold {
+    text-shadow:
+      0 0 7px #FFD700,
+      0 0 10px #FFD700,
+      0 0 21px #FFD700;
+    color: #FFE87C;
+  }
+
+  .neon-pink {
+    text-shadow:
+      0 0 7px #FF3366,
+      0 0 10px #FF3366,
+      0 0 21px #FF3366;
+    color: #FF9AB5;
+  }
+
+  /* ── Neon Box Glow ───────────────────────────────────── */
+  .box-neon-purple {
+    box-shadow:
+      0 0 5px #7B2FFF,
+      0 0 10px #7B2FFF,
+      0 0 20px #7B2FFF,
+      inset 0 0 5px rgba(123, 47, 255, 0.1);
+    border-color: #7B2FFF;
+  }
+
+  .box-neon-green {
+    box-shadow:
+      0 0 5px #00FF9F,
+      0 0 10px #00FF9F,
+      0 0 20px #00FF9F,
+      inset 0 0 5px rgba(0, 255, 159, 0.1);
+    border-color: #00FF9F;
+  }
+
+  .box-neon-cyan {
+    box-shadow:
+      0 0 5px #00E5FF,
+      0 0 10px #00E5FF,
+      0 0 20px #00E5FF,
+      inset 0 0 5px rgba(0, 229, 255, 0.1);
+    border-color: #00E5FF;
+  }
+
+  /* ── CRT Scanlines Effect ────────────────────────────── */
+  .scanlines {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.15) 2px,
+      rgba(0, 0, 0, 0.15) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* ── Pixel Border ────────────────────────────────────── */
+  .pixel-border {
+    border: 3px solid;
+    border-image: none;
+    image-rendering: pixelated;
+  }
+
+  /* ── Arcade Button ───────────────────────────────────── */
+  .arcade-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.1s ease;
+    text-transform: uppercase;
+  }
+
+  .arcade-btn:active {
+    transform: translateY(2px);
+  }
+
+  .arcade-btn-purple {
+    color: #E0AAFF;
+    border-color: #7B2FFF;
+    box-shadow: 0 0 10px #7B2FFF, 0 4px 0 #3D0080;
+    background: rgba(123, 47, 255, 0.15);
+  }
+
+  .arcade-btn-purple:hover {
+    background: rgba(123, 47, 255, 0.3);
+    box-shadow: 0 0 20px #7B2FFF, 0 4px 0 #3D0080;
+  }
+
+  .arcade-btn-green {
+    color: #AFFFDF;
+    border-color: #00FF9F;
+    box-shadow: 0 0 10px #00FF9F, 0 4px 0 #006640;
+    background: rgba(0, 255, 159, 0.1);
+  }
+
+  .arcade-btn-green:hover {
+    background: rgba(0, 255, 159, 0.25);
+    box-shadow: 0 0 20px #00FF9F, 0 4px 0 #006640;
+  }
+
+  .arcade-btn-cyan {
+    color: #B3F9FF;
+    border-color: #00E5FF;
+    box-shadow: 0 0 10px #00E5FF, 0 4px 0 #006680;
+    background: rgba(0, 229, 255, 0.1);
+  }
+
+  .arcade-btn-cyan:hover {
+    background: rgba(0, 229, 255, 0.25);
+    box-shadow: 0 0 20px #00E5FF, 0 4px 0 #006680;
+  }
+
+  /* ── Card Flip ───────────────────────────────────────── */
+  .card-container {
+    perspective: 1000px;
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+
+  .card-inner.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .card-front,
+  .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .card-back {
+    transform: rotateY(180deg);
+  }
+
+  /* ── Dice Animation ──────────────────────────────────── */
+  @keyframes diceShake {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    10% { transform: rotate(-15deg) scale(1.1); }
+    20% { transform: rotate(15deg) scale(1.15); }
+    30% { transform: rotate(-10deg) scale(1.1); }
+    40% { transform: rotate(10deg) scale(1.2); }
+    50% { transform: rotate(-8deg) scale(1.15); }
+    60% { transform: rotate(8deg) scale(1.1); }
+    70% { transform: rotate(-5deg) scale(1.05); }
+    80% { transform: rotate(5deg) scale(1.1); }
+    90% { transform: rotate(-3deg) scale(1.05); }
+  }
+
+  @keyframes diceLand {
+    0% { transform: scale(1.3) rotate(5deg); }
+    50% { transform: scale(0.9) rotate(-2deg); }
+    75% { transform: scale(1.1) rotate(1deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
+  .dice-rolling {
+    animation: diceShake 0.8s ease-in-out infinite;
+  }
+
+  .dice-landing {
+    animation: diceLand 0.4s ease-out forwards;
+  }
+
+  /* ── Pawn Movement ───────────────────────────────────── */
+  @keyframes pawnHop {
+    0% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.2); }
+    100% { transform: translateY(0) scale(1); }
+  }
+
+  @keyframes pawnGlow {
+    0%, 100% { filter: drop-shadow(0 0 8px #7B2FFF) drop-shadow(0 0 16px #B44FFF); }
+    50% { filter: drop-shadow(0 0 16px #7B2FFF) drop-shadow(0 0 32px #B44FFF); }
+  }
+
+  .pawn-hop {
+    animation: pawnHop 0.3s ease-in-out;
+  }
+
+  .pawn-idle {
+    animation: pawnGlow 2s ease-in-out infinite;
+  }
+
+  /* ── Feedback Animations ─────────────────────────────── */
+  @keyframes correctPop {
+    0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+    60% { transform: scale(1.15) rotate(3deg); opacity: 1; }
+    80% { transform: scale(0.95) rotate(-1deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  @keyframes incorrectShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+    20%, 40%, 60%, 80% { transform: translateX(8px); }
+  }
+
+  @keyframes particleFloat {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-80px) scale(0); opacity: 0; }
+  }
+
+  .feedback-correct {
+    animation: correctPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .feedback-incorrect {
+    animation: incorrectShake 0.5s ease-in-out;
+  }
+
+  /* ── Pulse Animations ────────────────────────────────── */
+  @keyframes neonPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  @keyframes borderPulse {
+    0%, 100% {
+      box-shadow: 0 0 5px #7B2FFF, 0 0 10px #7B2FFF, 0 0 20px #7B2FFF;
+    }
+    50% {
+      box-shadow: 0 0 10px #7B2FFF, 0 0 20px #7B2FFF, 0 0 40px #7B2FFF, 0 0 80px #B44FFF;
+    }
+  }
+
+  .neon-pulse {
+    animation: neonPulse 2s ease-in-out infinite;
+  }
+
+  .border-pulse {
+    animation: borderPulse 2s ease-in-out infinite;
+  }
+
+  /* ── Board Square Animations ─────────────────────────── */
+  @keyframes squareActive {
+    0%, 100% { box-shadow: 0 0 5px currentColor; }
+    50% { box-shadow: 0 0 15px currentColor, 0 0 30px currentColor; }
+  }
+
+  .square-active {
+    animation: squareActive 1s ease-in-out infinite;
+  }
+
+  /* ── Star Field Background ───────────────────────────── */
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+  }
+
+  /* ── Slide In Animations ─────────────────────────────── */
+  @keyframes slideInUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes slideInDown {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .animate-slide-up {
+    animation: slideInUp 0.4s ease-out forwards;
+  }
+
+  .animate-slide-down {
+    animation: slideInDown 0.4s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  /* ── Scrollbar Styling ───────────────────────────────── */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0A0A1A;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #7B2FFF;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #B44FFF;
+  }
+
+  /* ── Spin animation ────────────────────────────────────── */
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* ── Blinking Cursor ─────────────────────────────────── */
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  /* ── Floating particles ──────────────────────────────── */
+  @keyframes floatParticle {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ── Screen flash for feedback ───────────────────────── */
+  @keyframes flashGreen {
+    0% { background: rgba(0, 255, 159, 0); }
+    25% { background: rgba(0, 255, 159, 0.15); }
+    100% { background: rgba(0, 255, 159, 0); }
+  }
+
+  @keyframes flashRed {
+    0% { background: rgba(255, 51, 102, 0); }
+    25% { background: rgba(255, 51, 102, 0.15); }
+    100% { background: rgba(255, 51, 102, 0); }
+  }
+
+  .flash-green {
+    animation: flashGreen 0.6s ease-out forwards;
+  }
+
+  .flash-red {
+    animation: flashRed 0.6s ease-out forwards;
   }
 }
