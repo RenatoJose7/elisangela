@@ -38,6 +38,25 @@ const SQUARE_THEME_MAP = Array.from({ length: BOARD_SQUARES }, (_, i) => ({
   index: i,
 }));
 
+function generateBoardPath(): string {
+  const cellWidth = 100 / COLS;
+  const cellHeight = 100 / ROWS;
+  const offsetX = cellWidth / 2;
+  const offsetY = cellHeight / 2;
+  
+  let path = `M ${offsetX}% ${offsetY}%`;
+  
+  for (let i = 1; i < BOARD_SQUARES; i++) {
+    const pos = getSquareGridPos(i);
+    const visualRow = ROWS - 1 - pos.row;
+    const x = (pos.col + 0.5) * cellWidth;
+    const y = (visualRow + 0.5) * cellHeight;
+    path += ` L ${x}% ${y}%`;
+  }
+  
+  return path;
+}
+
 export default function GameBoard({
   players,
   currentPlayerIndex,
@@ -64,7 +83,7 @@ export default function GameBoard({
 
   return (
     <div
-      className="relative w-full rounded-sm p-2 sm:p-3"
+      className="relative w-full rounded-sm p-1.5 sm:p-2"
       style={{
         background: "rgba(8, 5, 20, 0.92)",
         border: "2px solid #7B2FFF",
@@ -85,14 +104,42 @@ export default function GameBoard({
         ◆ TABULEIRO CÓSMICO ◆
       </div>
 
+      {/* SVG Path for board sequence */}
+      <svg
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          width: "100%",
+          height: "100%",
+          zIndex: 0,
+          borderRadius: "3px",
+          overflow: "visible",
+        }}
+      >
+        <defs>
+          <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#7B2FFF" stopOpacity="0.3" />
+            <stop offset="50%" stopColor="#00E5FF" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="#7B2FFF" stopOpacity="0.3" />
+          </linearGradient>
+        </defs>
+        <path
+          d={generateBoardPath()}
+          stroke="url(#pathGradient)"
+          strokeWidth="1.5"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+
       {/* Grid */}
       <div
-        className="grid"
+        className="grid relative z-10"
         style={{
           gridTemplateColumns: `repeat(${COLS}, 1fr)`,
           gridTemplateRows: `repeat(${ROWS}, 1fr)`,
-          gap: "0.5rem 0.75rem",
-          rowGap: "1.5rem",
+          gap: "0.35rem 0.5rem",
+          rowGap: "1.2rem",
         }}
       >
         {Array.from({ length: ROWS }, (_, visualRow) => {
@@ -189,7 +236,7 @@ function BoardSquare({
       className="relative flex flex-col items-center justify-between select-none transition-all duration-200"
       style={{
         aspectRatio: "1",
-        minHeight: "40px",
+        minHeight: "32px",
         background: isStart
           ? "rgba(0, 229, 255, 0.1)"
           : isEnd
@@ -254,7 +301,7 @@ function BoardSquare({
         style={{ fontSize: "clamp(0.7rem, 2vw, 1rem)", lineHeight: 1, width: "100%", height: "auto" }}
       >
         {theme.image && !isBonus && !isTrap && !isEnd && !isStart ? (
-          <img src={theme.image} alt={theme.label} style={{ width: "90%", height: "auto", maxHeight: "2rem", objectFit: "contain" }} />
+          <img src={theme.image} alt={theme.label} style={{ width: "95%", height: "auto", maxHeight: "2.8rem", objectFit: "contain" }} />
         ) : isEnd ? (
           "🏆"
         ) : isBonus ? (
