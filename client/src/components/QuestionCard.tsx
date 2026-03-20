@@ -36,13 +36,13 @@ export default function QuestionCard({
 
   return (
     <div
-      className="card-container w-full fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
+      className="card-container fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
       style={{
         background: "rgba(0, 0, 0, 0.6)",
         pointerEvents: isFlipped ? "auto" : "none",
       }}
     >
-      <div className="w-11/12 max-w-2xl max-h-96" style={{ pointerEvents: "auto" }}>
+      <div className="w-11/12 max-w-2xl" style={{ pointerEvents: "auto", maxHeight: "85vh" }}>
         <div
           className={`card-inner ${isFlipped ? "flipped" : ""}`}
           style={{ height: "100%" }}
@@ -207,7 +207,7 @@ export default function QuestionCard({
           </div>
 
           {/* Answer options */}
-          <div className="px-5 py-4 flex flex-col gap-2 overflow-y-auto" style={{ maxHeight: "200px" }}>
+          <div className="px-4 py-3 flex flex-col gap-1.5 overflow-y-auto" style={{ maxHeight: "140px" }}>
             {question.options.map((option, i) => {
               const isSelected = selectedAnswer === i;
               const isCorrect = i === question.correctIndex;
@@ -248,9 +248,9 @@ export default function QuestionCard({
                   key={i}
                   onClick={() => canSelect && onSelectAnswer(i)}
                   disabled={!canSelect}
-                  className="w-full text-left rounded-sm transition-all duration-200 flex items-start gap-2.5"
+                  className="w-full text-left rounded-sm transition-all duration-200 flex items-start gap-2"
                   style={{
-                    padding: "0.7rem 0.85rem",
+                    padding: "0.5rem 0.65rem",
                     background: bgColor,
                     border: `1.5px solid ${borderColor}`,
                     boxShadow:
@@ -290,9 +290,9 @@ export default function QuestionCard({
                   <span
                     className="font-orbitron flex-1"
                     style={{
-                      fontSize: "0.8rem",
+                      fontSize: "0.72rem",
                       color: textColor,
-                      lineHeight: 1.6,
+                      lineHeight: 1.4,
                     }}
                   >
                     {option}
