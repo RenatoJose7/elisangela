@@ -138,8 +138,8 @@ export default function GameBoard({
         style={{
           gridTemplateColumns: `repeat(${COLS}, 1fr)`,
           gridTemplateRows: `repeat(${ROWS}, 1fr)`,
-          gap: "0.35rem 0.5rem",
-          rowGap: "1.2rem",
+          gap: "0.8rem 1rem",
+          rowGap: "1.8rem",
         }}
       >
         {Array.from({ length: ROWS }, (_, visualRow) => {
@@ -236,7 +236,7 @@ function BoardSquare({
       className="relative flex flex-col items-center justify-between select-none transition-all duration-200"
       style={{
         aspectRatio: "1",
-        minHeight: "32px",
+        minHeight: "60px",
         background: isStart
           ? "rgba(0, 229, 255, 0.1)"
           : isEnd
@@ -286,7 +286,7 @@ function BoardSquare({
       <div
         className="relative font-arcade text-center leading-none pt-1 z-10"
         style={{
-          fontSize: "clamp(0.28rem, 0.9vw, 0.42rem)",
+          fontSize: "clamp(0.42rem, 1.4vw, 0.62rem)",
           color: isStart ? "#00E5FF" : isEnd ? "#FFD700" : theme.color,
           textShadow: `0 0 5px ${theme.color}`,
           opacity: 0.95,
@@ -298,7 +298,7 @@ function BoardSquare({
       {/* Theme icon / Image */}
       <div
         className="relative z-10 text-center leading-none"
-        style={{ fontSize: "clamp(0.7rem, 2vw, 1rem)", lineHeight: 1, width: "100%", height: "auto" }}
+        style={{ fontSize: "clamp(1rem, 3vw, 1.4rem)", lineHeight: 1, width: "100%", height: "auto" }}
       >
         {theme.image && !isBonus && !isTrap && !isEnd && !isStart ? (
           <img src={theme.image} alt={theme.label} style={{ width: "95%", height: "auto", maxHeight: "2.8rem", objectFit: "contain" }} />
@@ -317,7 +317,7 @@ function BoardSquare({
       <div
         className="relative font-arcade text-center leading-none pb-0.5 z-10"
         style={{
-          fontSize: "clamp(0.22rem, 0.7vw, 0.32rem)",
+          fontSize: "clamp(0.32rem, 1vw, 0.48rem)",
           color: isBonus ? "#FFD700" : isTrap ? "#FF3366" : theme.color,
           opacity: 0.75,
           letterSpacing: "0.01em",
@@ -373,8 +373,8 @@ interface PawnTokenProps {
 }
 
 function PawnToken({ player, isCurrentPlayer, isAnimating, size }: PawnTokenProps) {
-  const dim = size === "md" ? 26 : size === "sm" ? 18 : 13;
-  const fontSize = size === "md" ? "0.38rem" : size === "sm" ? "0.3rem" : "0.22rem";
+  const dim = size === "md" ? 40 : size === "sm" ? 28 : 20;
+  const fontSize = size === "md" ? "0.56rem" : size === "sm" ? "0.44rem" : "0.32rem";
 
   return (
     <div
