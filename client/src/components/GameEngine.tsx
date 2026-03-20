@@ -8,7 +8,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { GamePhase, GameState, Player } from "../data/gameTypes";
 import { BOARD_SQUARES, PLAYER_COLORS, getSpecialSquare } from "../data/gameTypes";
 import { getQuestionForSquare } from "../data/questions";
-import GameBoard from "./GameBoard";
+import SnakeBoard from "./SnakeBoard";
 import Dice from "./Dice";
 import QuestionCard from "./QuestionCard";
 import FeedbackPopup from "./FeedbackPopup";
@@ -306,8 +306,8 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
       <div className="flex flex-col xl:flex-row gap-3 p-3 sm:p-4 max-w-[1400px] mx-auto">
 
         {/* ── LEFT: Board ─────────────────────────────── */}
-        <div className="flex-1 min-w-0">
-          <GameBoard
+        <div className="flex-1 min-w-0" style={{ minHeight: "600px" }}>
+          <SnakeBoard
             players={gameState.players}
             currentPlayerIndex={gameState.currentPlayerIndex}
             highlightedSquare={

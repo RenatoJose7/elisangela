@@ -197,6 +197,7 @@ export const questions: Question[] = [
     id: 9,
     category: "mitose_profase",
     categoryLabel: "Mitose — Prófase",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663388787907/dqhjFfoGYRSqrFWR.png",
     question:
       "A prófase é a primeira fase da mitose. Quais são os principais eventos que caracterizam essa fase?",
     options: [
@@ -341,7 +342,8 @@ export const questions: Question[] = [
       "Se a cariocinese (divisão nuclear) ocorre normalmente mas a citocinese (divisão citoplasmática) é bloqueada, os dois núcleos formados permanecem dentro da mesma célula, resultando em células binucleadas. Se esse processo se repetir, a célula pode se tornar polinucleada. Esse fenômeno ocorre naturalmente em algumas células, como os osteoclastos e as fibras musculares esqueléticas.",
   },
 
-  // ── MEIOSE I ──────────────────────────────────────────────
+  // ── MEIOSE I ────────────────────────────────────────────
+  // Imagem: https://files.manuscdn.com/user_upload_by_module/session_file/310519663388787907/OFaqTEsnOkxzLWXP.jpg──
   {
     id: 18,
     category: "meiose_i",
@@ -436,7 +438,8 @@ export const questions: Question[] = [
       "Na não-disjunção na meiose II, apenas uma das duas células que entram na meiose II sofre o erro. Dessa célula, resultam duas células aneuploides: uma com n+1 (recebeu as duas cromátides que deveriam se separar) e outra com n-1 (não recebeu nenhuma cromátide). As outras duas células, provenientes da célula que realizou a meiose II corretamente, são normais (n).",
   },
 
-  // ── CROSSING OVER ─────────────────────────────────────────
+  // ── CROSSING OVER ───────────────────────────────────────
+  // Imagem: https://files.manuscdn.com/user_upload_by_module/session_file/310519663388787907/rVmDYWVdnUGgukfO.png──
   {
     id: 24,
     category: "crossing_over",
