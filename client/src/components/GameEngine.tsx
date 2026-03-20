@@ -219,10 +219,10 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
   const phaseLabel = phaseLabelMap[gameState.phase] || "";
 
   return (
-    <div className={`min-h-screen relative z-10 ${flashClass}`}>
-      {/* ── Top HUD Bar ──────────────────────────────────── */}
+    <div className={`h-screen w-screen relative z-10 overflow-hidden flex flex-col ${flashClass}`} style={{ background: "#0A0A1A" }}>
+      {/* ── Top HUD Bar ──────────────────────────────────────────── */}
       <div
-        className="sticky top-0 z-20 flex items-center justify-between px-3 sm:px-5 py-2.5"
+        className="z-20 flex items-center justify-between px-3 sm:px-5 py-2.5 flex-shrink-0"
         style={{
           background: "rgba(8, 5, 20, 0.97)",
           borderBottom: "1px solid #7B2FFF50",
@@ -232,9 +232,9 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
       >
         {/* Title */}
         <div
-          className="font-arcade hidden sm:block"
-          style={{
-            fontSize: "0.42rem",
+            className="font-arcade hidden sm:block"
+            style={{
+              fontSize: "0.55rem",
             color: "#7B2FFF",
             textShadow: "0 0 8px #7B2FFF",
           }}
@@ -246,7 +246,7 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
         <div
           className="font-arcade"
           style={{
-            fontSize: "0.45rem",
+            fontSize: "0.55rem",
             color: "#00E5FF",
             textShadow: "0 0 8px #00E5FF",
             letterSpacing: "0.1em",
@@ -271,10 +271,10 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
           <span
             className="font-arcade"
             style={{
-              fontSize: "0.4rem",
+              fontSize: "0.5rem",
               color: currentPlayer.color,
               textShadow: `0 0 6px ${currentPlayer.glowColor}`,
-              maxWidth: "100px",
+              maxWidth: "150px",
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
@@ -288,7 +288,7 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
             onClick={onExit}
             className="font-arcade ml-2"
             style={{
-              fontSize: "0.38rem",
+              fontSize: "0.48rem",
               color: "#FF3366",
               textShadow: "0 0 6px #FF3366",
               background: "rgba(255,51,102,0.1)",
@@ -302,11 +302,11 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
         </div>
       </div>
 
-      {/* ── Main Layout ──────────────────────────────────── */}
-      <div className="flex flex-col xl:flex-row gap-3 p-3 sm:p-4 max-w-[1400px] mx-auto">
+      {/* ── Main Layout ──────────────────────────────────────────── */}
+      <div className="flex flex-1 gap-2 p-2 overflow-hidden">
 
         {/* ── LEFT: Board ─────────────────────────────── */}
-        <div className="flex-1 min-w-0" style={{ minHeight: "600px" }}>
+        <div className="flex-1 min-w-0 overflow-hidden">
           <SnakeBoard
             players={gameState.players}
             currentPlayerIndex={gameState.currentPlayerIndex}
@@ -318,8 +318,8 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
           />
         </div>
 
-        {/* ── RIGHT: Controls ─────────────────────────── */}
-        <div className="xl:w-80 flex flex-col gap-3" style={{ flexShrink: 0 }}>
+        {/* ── RIGHT: Controls ─────────────────────────────── */}
+        <div className="w-80 flex flex-col gap-2 overflow-y-auto" style={{ flexShrink: 0 }}>
 
           {/* Player scoreboard */}
           <PlayerStatusPanel
@@ -345,16 +345,16 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
               }}
             >
               <div
-                className="w-2 h-2 rounded-full"
-                style={{
-                  background: "#7B2FFF",
-                  boxShadow: "0 0 6px #7B2FFF",
-                  animation: "neonPulse 1.5s ease-in-out infinite",
-                }}
-              />
-              <span
-                className="font-arcade"
-                style={{ fontSize: "0.4rem", color: "#E0AAFF" }}
+            className="w-3 h-3 rounded-full"
+            style={{
+              background: "#7B2FFF",
+              boxShadow: "0 0 6px #7B2FFF",
+              animation: "neonPulse 1.5s ease-in-out infinite",
+            }}
+          />
+          <span
+            className="font-arcade"
+            style={{ fontSize: "0.5rem", color: "#E0AAFF" }}
               >
                 {isCardPhase ? "CARTA DE DESAFIO" : "PAINEL DE CONTROLE"}
               </span>
@@ -365,27 +365,27 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
               {(gameState.phase === "rolling" || gameState.phase === "moving") && (
                 <div className="flex flex-col items-center gap-4">
                   {/* Turn indicator */}
-                  <div
-                    className="w-full py-2 px-3 rounded-sm text-center"
-                    style={{
-                      background: `rgba(${hexToRgb(currentPlayer.color)}, 0.1)`,
-                      border: `1px solid ${currentPlayer.color}50`,
-                    }}
-                  >
-                    <div
-                      className="font-arcade"
-                      style={{
-                        fontSize: "0.42rem",
-                        color: currentPlayer.color,
-                        textShadow: `0 0 8px ${currentPlayer.glowColor}`,
-                      }}
-                    >
-                      VEZ DE:
-                    </div>
-                    <div
-                      className="font-vt323 mt-1"
-                      style={{
-                        fontSize: "1.4rem",
+            <div
+              className="w-full py-2 px-3 rounded-sm text-center"
+              style={{
+                background: `rgba(${hexToRgb(currentPlayer.color)}, 0.1)`,
+                border: `1px solid ${currentPlayer.color}50`,
+              }}
+            >
+              <div
+                className="font-arcade"
+                style={{
+                  fontSize: "0.52rem",
+                  color: currentPlayer.color,
+                  textShadow: `0 0 8px ${currentPlayer.glowColor}`,
+                }}
+              >
+                VEZ DE:
+              </div>
+              <div
+                className="font-vt323 mt-1"
+                style={{
+                  fontSize: "1.8rem",
                         color: currentPlayer.glowColor,
                         textShadow: `0 0 10px ${currentPlayer.color}`,
                       }}
@@ -411,14 +411,14 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
                   >
                     <div className="flex justify-between items-center">
                       <span
-                        className="font-arcade"
-                        style={{ fontSize: "0.38rem", color: "#7B2FFF80" }}
-                      >
-                        POSIÇÃO
-                      </span>
-                      <span
-                        className="font-vt323"
-                        style={{ fontSize: "1.2rem", color: "#E0AAFF" }}
+                    className="font-arcade"
+                    style={{ fontSize: "0.48rem", color: "#7B2FFF80" }}
+                  >
+                    POSIÇÃO
+                  </span>
+                  <span
+                    className="font-vt323"
+                    style={{ fontSize: "1.5rem", color: "#E0AAFF" }}
                       >
                         {currentPlayer.position + 1} / {BOARD_SQUARES}
                       </span>

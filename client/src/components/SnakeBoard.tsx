@@ -1,8 +1,8 @@
 /*
- * SnakeBoard — Tabuleiro em formato de cobra (zig-zag)
+ * SnakeBoard — Tabuleiro em formato de linha horizontal
  * Design: Arcade Cósmico Neon Brutalist
- * Layout: Caminho contínuo em serpentina 5 colunas × 6 linhas = 30 casas
- * Objetivo: Parecer um único caminho, não blocos soltos
+ * Layout: Caminho contínuo em linha única com 30 casas
+ * Objetivo: Tabuleiro horizontal clássico, sem scroll
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -14,18 +14,6 @@ interface SnakeBoardProps {
   currentPlayerIndex: number;
   highlightedSquare?: number | null;
   onSquareClick?: (index: number) => void;
-}
-
-const COLS = 5;
-const ROWS = 6;
-
-// Build snake path positions (zig-zag)
-function getSquareGridPos(index: number): { col: number; row: number } {
-  const row = Math.floor(index / COLS);
-  const posInRow = index % COLS;
-  // Alternate direction: even rows left-to-right, odd rows right-to-left
-  const col = row % 2 === 0 ? posInRow : COLS - 1 - posInRow;
-  return { col, row };
 }
 
 const SQUARE_THEME_MAP = Array.from({ length: BOARD_SQUARES }, (_, i) => ({
@@ -59,7 +47,7 @@ export default function SnakeBoard({
 
   return (
     <div
-      className="relative w-full h-full rounded-sm p-2"
+      className="relative w-full h-full rounded-sm p-3"
       style={{
         background: "rgba(8, 5, 20, 0.92)",
         border: "2px solid #7B2FFF",
@@ -68,13 +56,14 @@ export default function SnakeBoard({
         display: "flex",
         flexDirection: "column",
         gap: "1rem",
+        overflow: "hidden",
       }}
     >
       {/* Board title */}
       <div
-        className="font-arcade text-center"
+        className="font-arcade text-center flex-shrink-0"
         style={{
-          fontSize: "clamp(0.5rem, 1.2vw, 0.7rem)",
+          fontSize: "clamp(0.6rem, 2vw, 0.9rem)",
           color: "#7B2FFF",
           textShadow: "0 0 8px #7B2FFF",
           letterSpacing: "0.2em",
@@ -83,34 +72,31 @@ export default function SnakeBoard({
         ◆ TABULEIRO CÓSMICO ◆
       </div>
 
-      {/* Snake Grid */}
+      {/* Horizontal Snake Path */}
       <div
-        className="grid flex-1 relative"
-        style={{
-          gridTemplateColumns: `repeat(${COLS}, 1fr)`,
-          gridTemplateRows: `repeat(${ROWS}, 1fr)`,
-          gap: "0.6rem",
-          width: "100%",
-          height: "100%",
-        }}
+        className="flex-1 flex items-center justify-center overflow-x-auto overflow-y-hidden"
+        style={{ minHeight: "200px" }}
       >
-        {Array.from({ length: ROWS }, (_, visualRow) => {
-          const boardRow = ROWS - 1 - visualRow;
-          return Array.from({ length: COLS }, (_, col) => {
-            const squareIndex = boardRow * COLS + (boardRow % 2 === 0 ? col : COLS - 1 - col);
-            if (squareIndex >= BOARD_SQUARES) return null;
-
-            const theme = SQUARE_THEME_MAP[squareIndex];
-            const playersHere = players.filter((p) => p.position === squareIndex);
-            const isHighlighted = highlightedSquare === squareIndex;
-            const isStart = squareIndex === 0;
-            const isEnd = squareIndex === BOARD_SQUARES - 1;
-            const specialSquare = getSpecialSquare(squareIndex);
+        <div
+          className="flex gap-2 px-2"
+          style={{
+            minWidth: "fit-content",
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
+        >
+          {Array.from({ length: BOARD_SQUARES }, (_, index) => {
+            const theme = SQUARE_THEME_MAP[index];
+            const playersHere = players.filter((p) => p.position === index);
+            const isHighlighted = highlightedSquare === index;
+            const isStart = index === 0;
+            const isEnd = index === BOARD_SQUARES - 1;
+            const specialSquare = getSpecialSquare(index);
 
             return (
               <SnakeBoardSquare
-                key={squareIndex}
-                index={squareIndex}
+                key={index}
+                index={index}
                 theme={theme}
                 players={playersHere}
                 currentPlayerIndex={currentPlayerIndex}
@@ -119,29 +105,35 @@ export default function SnakeBoard({
                 isEnd={isEnd}
                 animatingPlayers={animatingPlayers}
                 specialSquare={specialSquare}
-                onClick={() => onSquareClick?.(squareIndex)}
+                onClick={() => onSquareClick?.(index)}
               />
             );
-          });
-        })}
+          })}
+        </div>
       </div>
 
       {/* Bottom info */}
       <div
-        className="flex items-center justify-between text-center"
+        className="flex items-center justify-between text-center flex-shrink-0"
         style={{ borderTop: "1px solid #7B2FFF20", paddingTop: "0.5rem" }}
       >
         <div
           className="font-vt323 flex-1"
-          style={{ fontSize: "clamp(0.5rem, 0.8vw, 0.65rem)", color: "#7B2FFF60" }}
+          style={{ fontSize: "clamp(0.5rem, 1vw, 0.7rem)", color: "#7B2FFF60" }}
         >
-          INÍCIO → CASA 1
+          INÍCIO
         </div>
         <div
-          className="font-vt323 flex-1"
-          style={{ fontSize: "clamp(0.5rem, 0.8vw, 0.65rem)", color: "#FFD70060" }}
+          className="font-vt323 flex-1 text-center"
+          style={{ fontSize: "clamp(0.5rem, 1vw, 0.7rem)", color: "#FFD70060" }}
         >
-          META → CASA {BOARD_SQUARES}
+          {BOARD_SQUARES} CASAS
+        </div>
+        <div
+          className="font-vt323 flex-1 text-right"
+          style={{ fontSize: "clamp(0.5rem, 1vw, 0.7rem)", color: "#FFD70060" }}
+        >
+          META
         </div>
       </div>
     </div>
@@ -181,10 +173,11 @@ function SnakeBoardSquare({
   return (
     <div
       onClick={onClick}
-      className="relative flex flex-col items-center justify-between select-none transition-all duration-200"
+      className="relative flex flex-col items-center justify-between select-none transition-all duration-200 flex-shrink-0"
       style={{
-        aspectRatio: "1",
-        minHeight: "60px",
+        width: "90px",
+        height: "90px",
+        minWidth: "90px",
         background: isStart
           ? "rgba(0, 229, 255, 0.1)"
           : isEnd
@@ -194,7 +187,7 @@ function SnakeBoardSquare({
           : isTrap
           ? "rgba(255, 51, 102, 0.12)"
           : `rgba(${rgb}, 0.07)`,
-        border: `1.5px solid ${
+        border: `2px solid ${
           isHighlighted
             ? "#FFD700"
             : isStart
@@ -207,7 +200,7 @@ function SnakeBoardSquare({
             ? "#FF3366"
             : theme.color + "70"
         }`,
-        borderRadius: "3px",
+        borderRadius: "4px",
         boxShadow: isHighlighted
           ? `0 0 14px #FFD700, 0 0 28px #FFD70060`
           : isBonus
@@ -217,7 +210,7 @@ function SnakeBoardSquare({
           : hasPawn
           ? `0 0 8px ${players[0].glowColor}70`
           : `0 0 3px ${theme.color}25`,
-        transform: isHighlighted ? "scale(1.06)" : "scale(1)",
+        transform: isHighlighted ? "scale(1.08)" : "scale(1)",
         cursor: "default",
         overflow: "hidden",
       }}
@@ -234,10 +227,11 @@ function SnakeBoardSquare({
       <div
         className="relative font-arcade text-center leading-none pt-1 z-10"
         style={{
-          fontSize: "clamp(0.42rem, 1.4vw, 0.62rem)",
+          fontSize: "clamp(0.6rem, 2vw, 0.8rem)",
           color: isStart ? "#00E5FF" : isEnd ? "#FFD700" : theme.color,
           textShadow: `0 0 5px ${theme.color}`,
           opacity: 0.95,
+          fontWeight: "bold",
         }}
       >
         {isStart ? "IN" : isEnd ? "FIM" : index}
@@ -246,10 +240,10 @@ function SnakeBoardSquare({
       {/* Theme icon / Image */}
       <div
         className="relative z-10 text-center leading-none"
-        style={{ fontSize: "clamp(1rem, 3vw, 1.4rem)", lineHeight: 1, width: "100%", height: "auto" }}
+        style={{ fontSize: "clamp(1.2rem, 3vw, 1.8rem)", lineHeight: 1, width: "100%", height: "auto" }}
       >
         {theme.image && !isBonus && !isTrap && !isEnd && !isStart ? (
-          <img src={theme.image} alt={theme.label} style={{ width: "95%", height: "auto", maxHeight: "2.8rem", objectFit: "contain" }} />
+          <img src={theme.image} alt={theme.label} style={{ width: "90%", height: "auto", maxHeight: "3.5rem", objectFit: "contain" }} />
         ) : isEnd ? (
           "🏆"
         ) : isBonus ? (
@@ -265,7 +259,7 @@ function SnakeBoardSquare({
       <div
         className="relative font-arcade text-center leading-none pb-0.5 z-10"
         style={{
-          fontSize: "clamp(0.32rem, 1vw, 0.48rem)",
+          fontSize: "clamp(0.4rem, 1.2vw, 0.6rem)",
           color: isBonus ? "#FFD700" : isTrap ? "#FF3366" : theme.color,
           opacity: 0.75,
           letterSpacing: "0.01em",
@@ -290,7 +284,7 @@ function SnakeBoardSquare({
                   player={player}
                   isCurrentPlayer={isCurrentPlayer}
                   isAnimating={isAnimating}
-                  size={players.length > 2 ? "xs" : players.length > 1 ? "sm" : "md"}
+                  size={players.length > 2 ? "md" : "lg"}
                 />
               );
             })}
@@ -304,7 +298,7 @@ function SnakeBoardSquare({
           className="absolute inset-0 pointer-events-none z-30"
           style={{
             border: "2px solid #FFD700",
-            borderRadius: "3px",
+            borderRadius: "4px",
             animation: "squareActive 0.8s ease-in-out infinite",
           }}
         />
@@ -317,12 +311,12 @@ interface PawnTokenProps {
   player: Player;
   isCurrentPlayer: boolean;
   isAnimating: boolean;
-  size: "xs" | "sm" | "md";
+  size: "md" | "lg";
 }
 
 function PawnToken({ player, isCurrentPlayer, isAnimating, size }: PawnTokenProps) {
-  const dim = size === "md" ? 40 : size === "sm" ? 28 : 20;
-  const fontSize = size === "md" ? "0.56rem" : size === "sm" ? "0.44rem" : "0.32rem";
+  const dim = size === "lg" ? 50 : 35;
+  const fontSize = size === "lg" ? "0.7rem" : "0.55rem";
 
   return (
     <div
@@ -333,10 +327,10 @@ function PawnToken({ player, isCurrentPlayer, isAnimating, size }: PawnTokenProp
         width: dim,
         height: dim,
         background: `radial-gradient(circle at 35% 35%, ${player.glowColor}, ${player.color})`,
-        border: `1.5px solid ${player.glowColor}`,
+        border: `2px solid ${player.glowColor}`,
         boxShadow: isCurrentPlayer
-          ? `0 0 8px ${player.glowColor}, 0 0 16px ${player.color}`
-          : `0 0 3px ${player.color}`,
+          ? `0 0 10px ${player.glowColor}, 0 0 20px ${player.color}`
+          : `0 0 4px ${player.color}`,
         fontSize,
         color: "#fff",
         zIndex: 10,
