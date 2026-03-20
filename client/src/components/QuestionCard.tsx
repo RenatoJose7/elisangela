@@ -36,27 +36,28 @@ export default function QuestionCard({
 
   return (
     <div
-      className="card-container w-full"
+      className="card-container w-full fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
       style={{
-        height: isFlipped ? "auto" : "280px",
-        minHeight: "280px",
+        background: "rgba(0, 0, 0, 0.6)",
+        pointerEvents: isFlipped ? "auto" : "none",
       }}
     >
-      <div
-        className={`card-inner ${isFlipped ? "flipped" : ""}`}
-        style={{ height: "100%" }}
-      >
-        {/* ── CARD FRONT (closed) ─────────────────────────── */}
+      <div className="w-11/12 max-w-2xl max-h-96" style={{ pointerEvents: "auto" }}>
         <div
-          className="card-front rounded-sm overflow-hidden cursor-pointer select-none"
-          onClick={!isFlipped ? onFlip : undefined}
-          style={{
-            background: "#0D0520",
-            border: `2px solid ${categoryColor}`,
-            boxShadow: `0 0 15px ${categoryColor}50, 0 0 30px ${categoryColor}25`,
-            height: "280px",
-          }}
+          className={`card-inner ${isFlipped ? "flipped" : ""}`}
+          style={{ height: "100%" }}
         >
+          {/* ── CARD FRONT (closed) ─────────────────────────── */}
+          <div
+            className="card-front rounded-sm overflow-hidden cursor-pointer select-none"
+            onClick={!isFlipped ? onFlip : undefined}
+            style={{
+              background: "#0D0520",
+              border: `3px solid ${categoryColor}`,
+              boxShadow: `0 0 20px ${categoryColor}70, 0 0 40px ${categoryColor}40`,
+              height: "320px",
+            }}
+          >
           <div
             className="w-full h-full relative flex flex-col items-center justify-center gap-3"
             style={{
@@ -90,9 +91,9 @@ export default function QuestionCard({
             <div
               className="relative z-10 font-vt323"
               style={{
-                fontSize: "5rem",
+                fontSize: "7rem",
                 color: categoryColor,
-                textShadow: `0 0 25px ${categoryColor}, 0 0 50px ${categoryColor}60`,
+                textShadow: `0 0 30px ${categoryColor}, 0 0 60px ${categoryColor}60`,
                 lineHeight: 1,
                 animation: "neonPulse 2s ease-in-out infinite",
               }}
@@ -104,7 +105,7 @@ export default function QuestionCard({
             <div
               className="relative z-10 font-arcade text-center"
               style={{
-                fontSize: "0.45rem",
+                fontSize: "0.6rem",
                 color: "#E0AAFF",
                 textShadow: "0 0 10px #7B2FFF",
                 letterSpacing: "0.08em",
@@ -185,20 +186,20 @@ export default function QuestionCard({
 
           {/* Question text and image */}
           <div
-            className="px-4 py-3"
+            className="px-5 py-4"
             style={{ borderBottom: `1px solid ${categoryColor}20` }}
           >
             {question.image && (
-              <div className="mb-3 rounded-sm overflow-hidden" style={{ maxHeight: "120px", background: "rgba(123,47,255,0.1)", border: `1px solid ${categoryColor}30` }}>
+              <div className="mb-4 rounded-sm overflow-hidden" style={{ maxHeight: "180px", background: "rgba(123,47,255,0.1)", border: `1px solid ${categoryColor}30` }}>
                 <img src={question.image} alt="Pergunta" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
             )}
             <p
               className="font-orbitron leading-relaxed"
               style={{
-                fontSize: "0.68rem",
+                fontSize: "0.85rem",
                 color: "#D0C0F0",
-                lineHeight: 1.65,
+                lineHeight: 1.7,
               }}
             >
               {question.question}
@@ -206,7 +207,7 @@ export default function QuestionCard({
           </div>
 
           {/* Answer options */}
-          <div className="px-4 py-3 flex flex-col gap-1.5">
+          <div className="px-5 py-4 flex flex-col gap-2 overflow-y-auto" style={{ maxHeight: "200px" }}>
             {question.options.map((option, i) => {
               const isSelected = selectedAnswer === i;
               const isCorrect = i === question.correctIndex;
@@ -249,7 +250,7 @@ export default function QuestionCard({
                   disabled={!canSelect}
                   className="w-full text-left rounded-sm transition-all duration-200 flex items-start gap-2.5"
                   style={{
-                    padding: "0.55rem 0.7rem",
+                    padding: "0.7rem 0.85rem",
                     background: bgColor,
                     border: `1.5px solid ${borderColor}`,
                     boxShadow:
@@ -276,7 +277,7 @@ export default function QuestionCard({
                   <span
                     className="font-arcade flex-shrink-0"
                     style={{
-                      fontSize: "0.42rem",
+                      fontSize: "0.55rem",
                       color: labelColor,
                       textShadow: `0 0 5px ${labelColor}`,
                       marginTop: "0.12rem",
@@ -289,9 +290,9 @@ export default function QuestionCard({
                   <span
                     className="font-orbitron flex-1"
                     style={{
-                      fontSize: "0.65rem",
+                      fontSize: "0.8rem",
                       color: textColor,
-                      lineHeight: 1.5,
+                      lineHeight: 1.6,
                     }}
                   >
                     {option}
@@ -302,12 +303,12 @@ export default function QuestionCard({
                     <span
                       className="ml-auto flex-shrink-0 font-vt323"
                       style={{
-                        fontSize: "1.3rem",
+                        fontSize: "1.6rem",
                         color: feedbackType === "correct" ? "#00FF9F" : "#FF3366",
                         textShadow:
                           feedbackType === "correct"
-                            ? "0 0 8px #00FF9F"
-                            : "0 0 8px #FF3366",
+                            ? "0 0 10px #00FF9F"
+                            : "0 0 10px #FF3366",
                       }}
                     >
                       {feedbackType === "correct" ? "✓" : "✗"}
@@ -317,9 +318,9 @@ export default function QuestionCard({
                     <span
                       className="ml-auto flex-shrink-0 font-vt323"
                       style={{
-                        fontSize: "1.3rem",
+                        fontSize: "1.6rem",
                         color: "#00FF9F",
-                        textShadow: "0 0 8px #00FF9F",
+                        textShadow: "0 0 10px #00FF9F",
                       }}
                     >
                       ✓
@@ -330,6 +331,7 @@ export default function QuestionCard({
             })}
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
