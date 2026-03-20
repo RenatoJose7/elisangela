@@ -1,10 +1,7 @@
 /*
- * SnakeBoard — Tabuleiro em grid zig-zag (Cobras e Escadas)
+ * SnakeBoard — Tabuleiro em linhas horizontais zig-zag
  * Design: Arcade Cósmico Neon Brutalist
- * Layout: 6 linhas × 5 colunas = 30 casas em padrão zig-zag
- * Linha 1: esquerda → direita
- * Linha 2: direita → esquerda
- * Linha 3: esquerda → direita (e assim por diante)
+ * Layout: 6 linhas com 5 casas cada, alternando direção
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -50,36 +47,61 @@ export default function SnakeBoard({
     }
   }, [players]);
 
-  // Renderizar grid em zig-zag
-  const gridCells = [];
+  // Renderizar linhas em zig-zag
+  const rows = [];
   for (let row = 0; row < ROWS; row++) {
     const rowCells = [];
-    for (let col = 0; col < COLS; col++) {
-      // Se linha é par (0, 2, 4...), vai esquerda→direita
-      // Se linha é ímpar (1, 3, 5...), vai direita→esquerda
-      const colIndex = row % 2 === 0 ? col : COLS - 1 - col;
-      const squareIndex = row * COLS + colIndex;
-
-      if (squareIndex < BOARD_SQUARES) {
-        rowCells.push(
-          <SnakeBoardSquare
-            key={squareIndex}
-            index={squareIndex}
-            theme={SQUARE_THEME_MAP[squareIndex]}
-            players={players.filter((p) => p.position === squareIndex)}
-            currentPlayerIndex={currentPlayerIndex}
-            isHighlighted={highlightedSquare === squareIndex}
-            isStart={squareIndex === 0}
-            isEnd={squareIndex === BOARD_SQUARES - 1}
-            animatingPlayers={animatingPlayers}
-            specialSquare={getSpecialSquare(squareIndex)}
-            onClick={() => onSquareClick?.(squareIndex)}
-          />
-        );
+    
+    // Se linha é par (0, 2, 4...), vai esquerda→direita
+    // Se linha é ímpar (1, 3, 5...), vai direita→esquerda
+    if (row % 2 === 0) {
+      // Esquerda → direita
+      for (let col = 0; col < COLS; col++) {
+        const squareIndex = row * COLS + col;
+        if (squareIndex < BOARD_SQUARES) {
+          rowCells.push(
+            <SnakeBoardSquare
+              key={squareIndex}
+              index={squareIndex}
+              theme={SQUARE_THEME_MAP[squareIndex]}
+              players={players.filter((p) => p.position === squareIndex)}
+              currentPlayerIndex={currentPlayerIndex}
+              isHighlighted={highlightedSquare === squareIndex}
+              isStart={squareIndex === 0}
+              isEnd={squareIndex === BOARD_SQUARES - 1}
+              animatingPlayers={animatingPlayers}
+              specialSquare={getSpecialSquare(squareIndex)}
+              onClick={() => onSquareClick?.(squareIndex)}
+            />
+          );
+        }
+      }
+    } else {
+      // Direita → esquerda
+      for (let col = COLS - 1; col >= 0; col--) {
+        const squareIndex = row * COLS + col;
+        if (squareIndex < BOARD_SQUARES) {
+          rowCells.push(
+            <SnakeBoardSquare
+              key={squareIndex}
+              index={squareIndex}
+              theme={SQUARE_THEME_MAP[squareIndex]}
+              players={players.filter((p) => p.position === squareIndex)}
+              currentPlayerIndex={currentPlayerIndex}
+              isHighlighted={highlightedSquare === squareIndex}
+              isStart={squareIndex === 0}
+              isEnd={squareIndex === BOARD_SQUARES - 1}
+              animatingPlayers={animatingPlayers}
+              specialSquare={getSpecialSquare(squareIndex)}
+              onClick={() => onSquareClick?.(squareIndex)}
+            />
+          );
+        }
       }
     }
-    gridCells.push(
-      <div key={`row-${row}`} className="flex gap-2 justify-center">
+
+    rows.push(
+      <div key={`row-${row}`} className="flex gap-2 justify-center w-full">
         {rowCells}
       </div>
     );
@@ -92,7 +114,7 @@ export default function SnakeBoard({
         background: "transparent",
         display: "flex",
         flexDirection: "column",
-        gap: "0.5rem",
+        gap: "0.8rem",
         padding: "0.5rem",
       }}
     >
@@ -109,9 +131,9 @@ export default function SnakeBoard({
         ◆ TABULEIRO CÓSMICO ◆
       </div>
 
-      {/* Grid zig-zag */}
-      <div className="flex flex-col gap-2 items-center justify-center flex-1">
-        {gridCells}
+      {/* Linhas zig-zag */}
+      <div className="flex flex-col gap-3 items-center justify-center flex-1 w-full">
+        {rows}
       </div>
 
       {/* Bottom info */}

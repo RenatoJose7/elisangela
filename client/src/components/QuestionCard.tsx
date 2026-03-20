@@ -190,8 +190,8 @@ export default function QuestionCard({
             style={{ borderBottom: `1px solid ${categoryColor}20` }}
           >
             {question.image && (
-              <div className="mb-4 rounded-sm overflow-hidden" style={{ maxHeight: "180px", background: "rgba(123,47,255,0.1)", border: `1px solid ${categoryColor}30` }}>
-                <img src={question.image} alt="Pergunta" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <div className="mb-4 rounded-sm overflow-hidden flex items-center justify-center" style={{ height: "160px", background: "rgba(123,47,255,0.1)", border: `1px solid ${categoryColor}30` }}>
+                <img src={question.image} alt="Pergunta" style={{ width: "100%", height: "100%", objectFit: "contain", padding: "0.5rem" }} />
               </div>
             )}
             <p
