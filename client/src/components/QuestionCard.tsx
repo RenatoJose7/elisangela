@@ -36,13 +36,16 @@ export default function QuestionCard({
 
   return (
     <div
-      className="card-container fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
+      className="card-container fixed inset-0 flex items-center justify-center z-50"
       style={{
-        background: "rgba(0, 0, 0, 0.6)",
+        background: isFlipped ? "rgba(0, 0, 0, 0.7)" : "transparent",
         pointerEvents: isFlipped ? "auto" : "none",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      <div className="w-11/12 max-w-2xl" style={{ pointerEvents: "auto", maxHeight: "85vh" }}>
+      <div className="w-full max-w-3xl mx-auto" style={{ pointerEvents: "auto", maxHeight: "90vh", padding: "1rem" }}>
         <div
           className={`card-inner ${isFlipped ? "flipped" : ""}`}
           style={{ height: "100%" }}
@@ -186,20 +189,20 @@ export default function QuestionCard({
 
           {/* Question text and image */}
           <div
-            className="px-5 py-4"
+            className="px-6 py-5"
             style={{ borderBottom: `1px solid ${categoryColor}20` }}
           >
             {question.image && (
-              <div className="mb-4 rounded-sm overflow-hidden flex items-center justify-center" style={{ height: "160px", background: "rgba(123,47,255,0.1)", border: `1px solid ${categoryColor}30` }}>
-                <img src={question.image} alt="Pergunta" style={{ width: "100%", height: "100%", objectFit: "contain", padding: "0.5rem" }} />
+              <div className="mb-5 rounded-sm overflow-hidden flex items-center justify-center" style={{ height: "220px", background: "rgba(123,47,255,0.1)", border: `1px solid ${categoryColor}30` }}>
+                <img src={question.image} alt="Pergunta" style={{ width: "100%", height: "100%", objectFit: "contain", padding: "0.8rem" }} />
               </div>
             )}
             <p
               className="font-orbitron leading-relaxed"
               style={{
-                fontSize: "0.85rem",
+                fontSize: "1rem",
                 color: "#D0C0F0",
-                lineHeight: 1.7,
+                lineHeight: 1.8,
               }}
             >
               {question.question}
@@ -207,7 +210,7 @@ export default function QuestionCard({
           </div>
 
           {/* Answer options */}
-          <div className="px-4 py-3 flex flex-col gap-1.5 overflow-y-auto" style={{ maxHeight: "140px" }}>
+          <div className="px-6 py-4 flex flex-col gap-2 overflow-y-auto" style={{ maxHeight: "200px" }}>
             {question.options.map((option, i) => {
               const isSelected = selectedAnswer === i;
               const isCorrect = i === question.correctIndex;
@@ -248,9 +251,9 @@ export default function QuestionCard({
                   key={i}
                   onClick={() => canSelect && onSelectAnswer(i)}
                   disabled={!canSelect}
-                  className="w-full text-left rounded-sm transition-all duration-200 flex items-start gap-2"
+                  className="w-full text-left rounded-sm transition-all duration-200 flex items-start gap-3"
                   style={{
-                    padding: "0.5rem 0.65rem",
+                    padding: "0.7rem 0.9rem",
                     background: bgColor,
                     border: `1.5px solid ${borderColor}`,
                     boxShadow:
@@ -277,7 +280,7 @@ export default function QuestionCard({
                   <span
                     className="font-arcade flex-shrink-0"
                     style={{
-                      fontSize: "0.55rem",
+                      fontSize: "0.7rem",
                       color: labelColor,
                       textShadow: `0 0 5px ${labelColor}`,
                       marginTop: "0.12rem",
@@ -290,9 +293,9 @@ export default function QuestionCard({
                   <span
                     className="font-orbitron flex-1"
                     style={{
-                      fontSize: "0.72rem",
+                      fontSize: "0.9rem",
                       color: textColor,
-                      lineHeight: 1.4,
+                      lineHeight: 1.5,
                     }}
                   >
                     {option}
