@@ -38,15 +38,18 @@ export default function QuestionCard({
     <div
       className="card-container fixed inset-0 flex items-center justify-center z-50"
       style={{
-        background: isFlipped ? "rgba(0, 0, 0, 0.7)" : "transparent",
-        pointerEvents: isFlipped ? "auto" : "none",
-        display: isFlipped ? "flex" : "none",
+        background: "rgba(0, 0, 0, 0.7)",
+        pointerEvents: "auto",
+        display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        visibility: isFlipped ? "visible" : "hidden",
+        opacity: isFlipped ? 1 : 0,
+        transition: "opacity 0.3s ease-in-out",
       }}
     >
       <div className="w-full" style={{ pointerEvents: "auto", padding: "1rem", display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
-        <div style={{ maxWidth: "600px", width: "100%", maxHeight: "85vh", overflow: "auto" }}>
+        <div style={{ maxWidth: "600px", width: "100%", maxHeight: "90vh", overflow: "hidden" }}>
         <div
           className={`card-inner ${isFlipped ? "flipped" : ""}`}
           style={{ height: "100%" }}

@@ -67,10 +67,24 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
         break;
       case "bonus":
         oscillator.frequency.value = 800;
-        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
         oscillator.start(audioContext.currentTime);
         oscillator.stop(audioContext.currentTime + 0.2);
+        break;
+      case "correct":
+        oscillator.frequency.value = 600;
+        gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.3);
+        break;
+      case "incorrect":
+        oscillator.frequency.value = 300;
+        gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.3);
         break;
     }
   };
@@ -180,6 +194,7 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
       if (!gameState.currentQuestion) return;
 
       const isCorrect = answerIndex === gameState.currentQuestion.correctIndex;
+      playSound(isCorrect ? "correct" : "incorrect");
 
       setFlashClass(isCorrect ? "flash-green" : "flash-red");
       setTimeout(() => setFlashClass(""), 600);

@@ -9,7 +9,7 @@ export function useAudio() {
       const newAudio = document.createElement("audio");
       newAudio.id = "background-music";
       newAudio.loop = true;
-      newAudio.volume = 0.3;
+      newAudio.volume = 0.1;
       
       // Usar uma música de fundo estilo arcade/cósmico
       // Usando uma URL de música royalty-free
