@@ -74,6 +74,7 @@ export const questions: Question[] = [
     correctIndex: 1,
     explanation:
       "A fase G1 (Gap 1) é marcada pelo intenso crescimento celular e síntese de proteínas e organelas. A célula aumenta de tamanho e produz os componentes necessários para a futura divisão. A duplicação do DNA ocorre na fase S, e a condensação dos cromossomos ocorre na prófase da mitose.",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/cell-interphase-g1-VVCrw7LRbBJfKQe3tWuWMP.webp",
   },
   {
     id: 2,

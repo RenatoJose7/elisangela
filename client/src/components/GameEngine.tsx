@@ -5,6 +5,7 @@
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useAudio } from "../hooks/useAudio";
 import type { GamePhase, GameState, Player } from "../data/gameTypes";
 import { BOARD_SQUARES, PLAYER_COLORS, getSpecialSquare } from "../data/gameTypes";
 import { getQuestionForSquare } from "../data/questions";
@@ -22,6 +23,7 @@ interface GameEngineProps {
 }
 
 export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) {
+  useAudio();
   const [gameState, setGameState] = useState<GameState>({
     phase: "rolling",
     players: initialPlayers,
@@ -46,8 +48,36 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
   const currentPlayer = gameState.players[gameState.currentPlayerIndex];
 
   // ── Roll Dice ──────────────────────────────────────────────
+  // Função para tocar som
+  const playSound = (type: "dice" | "bonus" | "correct" | "incorrect") => {
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    switch (type) {
+      case "dice":
+        oscillator.frequency.value = 400;
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.1);
+        break;
+      case "bonus":
+        oscillator.frequency.value = 800;
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.2);
+        break;
+    }
+  };
+
   const handleRollDice = useCallback(() => {
     if (gameState.phase !== "rolling" || gameState.isDiceRolling) return;
+    playSound("dice");
 
     setGameState((prev) => ({
       ...prev,
@@ -84,6 +114,7 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
           if (specialSquare) {
             specialSquareTriggered = specialSquare;
             if (specialSquare.type === "bonus") {
+              playSound("bonus");
               newPos = Math.min(newPos + 3, BOARD_SQUARES - 1);
               updatedPlayers = updatedPlayers.map((p, i) =>
                 i === prev.currentPlayerIndex ? { ...p, position: newPos } : p
@@ -123,6 +154,16 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
   }, [gameState.phase, gameState.isDiceRolling]);
 
   // ── Flip Card ──────────────────────────────────────────────
+  // Fazer a carta aparecer automaticamente quando entrar em card_reveal
+  useEffect(() => {
+    if (gameState.phase === "card_reveal" && !gameState.isCardFlipped) {
+      const timer = setTimeout(() => {
+        handleFlipCard();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [gameState.phase, gameState.isCardFlipped]);
+
   const handleFlipCard = useCallback(() => {
     if (gameState.phase !== "card_reveal") return;
     setGameState((prev) => ({
@@ -219,7 +260,7 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
   const phaseLabel = phaseLabelMap[gameState.phase] || "";
 
   return (
-    <div className={`h-screen w-screen relative z-10 overflow-hidden flex flex-col ${flashClass}`} style={{ background: "#0A0A1A" }}>
+    <div className={`h-screen w-screen relative z-10 overflow-hidden flex flex-col ${flashClass}`} style={{ background: "#0A0A1A", position: "relative" }}>
       {/* ── Top HUD Bar ──────────────────────────────────────────── */}
       <div
         className="z-20 flex items-center justify-between px-3 sm:px-5 py-2.5 flex-shrink-0"

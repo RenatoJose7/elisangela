@@ -40,12 +40,13 @@ export default function QuestionCard({
       style={{
         background: isFlipped ? "rgba(0, 0, 0, 0.7)" : "transparent",
         pointerEvents: isFlipped ? "auto" : "none",
-        display: "flex",
+        display: isFlipped ? "flex" : "none",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
-      <div className="w-full max-w-3xl mx-auto" style={{ pointerEvents: "auto", maxHeight: "90vh", padding: "1rem" }}>
+      <div className="w-full" style={{ pointerEvents: "auto", padding: "1rem", display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+        <div style={{ maxWidth: "600px", width: "100%", maxHeight: "85vh", overflow: "auto" }}>
         <div
           className={`card-inner ${isFlipped ? "flipped" : ""}`}
           style={{ height: "100%" }}
@@ -210,7 +211,7 @@ export default function QuestionCard({
           </div>
 
           {/* Answer options */}
-          <div className="px-6 py-4 flex flex-col gap-2 overflow-y-auto" style={{ maxHeight: "200px" }}>
+          <div className="px-4 py-3 flex flex-col gap-2 overflow-y-auto" style={{ maxHeight: "250px" }}>
             {question.options.map((option, i) => {
               const isSelected = selectedAnswer === i;
               const isCorrect = i === question.correctIndex;
@@ -251,9 +252,9 @@ export default function QuestionCard({
                   key={i}
                   onClick={() => canSelect && onSelectAnswer(i)}
                   disabled={!canSelect}
-                  className="w-full text-left rounded-sm transition-all duration-200 flex items-start gap-3"
+                  className="w-full text-left rounded-sm transition-all duration-200 flex items-start gap-2"
                   style={{
-                    padding: "0.7rem 0.9rem",
+                    padding: "0.5rem 0.7rem",
                     background: bgColor,
                     border: `1.5px solid ${borderColor}`,
                     boxShadow:
@@ -277,7 +278,7 @@ export default function QuestionCard({
                   }}
                 >
                   {/* Letter badge */}
-                  <span
+                  <span style={{ minWidth: "24px", fontSize: "0.85rem" }}
                     className="font-arcade flex-shrink-0"
                     style={{
                       fontSize: "0.7rem",
@@ -290,7 +291,7 @@ export default function QuestionCard({
                   </span>
 
                   {/* Option text */}
-                  <span
+                  <span style={{ fontSize: "0.9rem" }}
                     className="font-orbitron flex-1"
                     style={{
                       fontSize: "0.9rem",
@@ -333,6 +334,7 @@ export default function QuestionCard({
               );
             })}
           </div>
+        </div>
         </div>
       </div>
       </div>

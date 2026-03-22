@@ -107,32 +107,7 @@ export default function SnakeBoard({
       </div>
     );
 
-    // Adicionar "escada" entre as linhas (exceto na última)
-    if (row < ROWS - 1) {
-      rows.push(
-        <div key={`ladder-${row}`} className="flex justify-center w-full">
-          <div
-            style={{
-              width: "80px",
-              height: "30px",
-              border: "2px solid #FFD700",
-              borderRadius: "4px",
-              background: "rgba(255, 215, 0, 0.1)",
-              boxShadow: "0 0 15px #FFD70060",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "0.8rem",
-              color: "#FFD700",
-              fontFamily: "monospace",
-              textShadow: "0 0 8px #FFD700",
-            }}
-          >
-            ↕
-          </div>
-        </div>
-      );
-    }
+    // Escadas removidas
   }
 
   return (
