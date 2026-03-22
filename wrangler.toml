@@ -1,0 +1,37 @@
+name = "elisangela"
+type = "javascript"
+account_id = ""
+workers_dev = true
+route = ""
+zone_id = ""
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "elisangela-prod"
+
+[build]
+command = "pnpm build"
+cwd = "./"
+watch_paths = ["client/**/*.tsx", "client/**/*.ts", "client/**/*.css"]
+
+[[build.upload]]
+format = "service-worker"
+
+[build.upload.rules]
+type = "CompiledContentType"
+globs = ["**/*.wasm"]
+fallthrough = true
+
+[[build.upload.rules]]
+type = "Text"
+globs = ["**/*.txt"]
+fallthrough = true
+
+[[build.upload.rules]]
+type = "CompiledContentType"
+globs = ["**/*.wasm"]
+
+[build.upload.rules]
+type = "CompiledContentType"
+globs = ["**/*.wasm"]
+fallthrough = true
