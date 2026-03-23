@@ -285,104 +285,7 @@ export const questions: Question[] = [
     correctIndex: 1,
     explanation: "A DNA polimerase é essencial para a replicação do DNA, que ocorre exclusivamente na fase S (Síntese) da interfase.",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/dna-replication-VVCrw7LRbBJfKQe3tWuWMP.webp"
-  }
-];
-
-export function getRandomQuestions(count: number): Question[] {
-  const shuffled = [...questions].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
-}
-
-export function getQuestionForSquare(squareIndex: number): Question {
-  return questions[squareIndex % questions.length];
-}
-
-  // ── INTERFASE G1 ──────────────────────────────────────────
-  {
-    id: 1,
-    category: "interfase_g1",
-    categoryLabel: "Interfase — G1",
-    question:
-      "Durante a fase G1 da interfase, a célula realiza intensa síntese proteica e crescimento citoplasmático. Qual é o principal evento que caracteriza essa fase e a distingue das demais subfases da interfase?",
-    options: [
-      "A duplicação do DNA cromossômico",
-      "O crescimento celular e a produção de proteínas necessárias para a divisão",
-      "A condensação dos cromossomos em preparação para a mitose",
-      "A separação das cromátides-irmãs",
-    ],
-    correctIndex: 1,
-    explanation:
-      "A fase G1 (Gap 1) é marcada pelo intenso crescimento celular e síntese de proteínas e organelas. A célula aumenta de tamanho e produz os componentes necessários para a futura divisão. A duplicação do DNA ocorre na fase S, e a condensação dos cromossomos ocorre na prófase da mitose.",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeTeoqYj/cell-interphase-g1-VVCrw7LRbBJfKQe3tWuWMP.webp",
   },
-  {
-    id: 2,
-    category: "interfase_g1",
-    categoryLabel: "Interfase — G1",
-    question:
-      "O ponto de restrição (ponto R) é um checkpoint crucial localizado na fase G1. Sobre esse mecanismo de controle do ciclo celular, é CORRETO afirmar que:",
-    options: [
-      "Verifica se o DNA foi corretamente duplicado antes de prosseguir para a fase S",
-      "Avalia se a célula tem tamanho e recursos suficientes para comprometer-se com a divisão celular",
-      "Controla a separação dos cromossomos durante a anáfase",
-      "Regula exclusivamente a apoptose em células tumorais",
-    ],
-    correctIndex: 1,
-    explanation:
-      "O ponto de restrição (R) em G1 é o principal checkpoint onde a célula avalia se possui tamanho, nutrientes e sinais de crescimento suficientes para se comprometer com a divisão. Se as condições não forem favoráveis, a célula entra em G0 (quiescência). A verificação da duplicação do DNA ocorre no checkpoint G2/M.",
-  },
-  {
-    id: 3,
-    category: "interfase_g1",
-    categoryLabel: "Interfase — G1",
-    question:
-      "(ENEM adaptado) Células-tronco embrionárias possuem ciclos celulares muito curtos, com fase G1 extremamente reduzida. Isso ocorre porque:",
-    options: [
-      "Essas células não precisam crescer antes de se dividir, pois já possuem todos os recursos necessários",
-      "A fase G1 curta impede a ocorrência de mutações no DNA",
-      "Células embrionárias realizam meiose em vez de mitose",
-      "A ausência de G1 garante maior variabilidade genética",
-    ],
-    correctIndex: 0,
-    explanation:
-      "Em células-tronco embrionárias, a G1 é muito curta porque essas células já possuem reservas maternas de proteínas, mRNAs e organelas suficientes para sustentar múltiplas divisões sem necessidade de crescimento prévio. Isso permite divisões rápidas durante o desenvolvimento embrionário precoce.",
-  },
-
-  // ── INTERFASE G2 ──────────────────────────────────────────
-  {
-    id: 7,
-    category: "interfase_g2",
-    categoryLabel: "Interfase — G2",
-    question:
-      "A fase G2 da interfase precede imediatamente a mitose. Qual é a principal função dessa fase no ciclo celular?",
-    options: [
-      "Duplicar o DNA para garantir que cada célula-filha receba o material genético completo",
-      "Verificar a integridade do DNA replicado e sintetizar proteínas necessárias para a divisão, como as tubulinas",
-      "Realizar a citocinese e separar os citoplasmas das células-filhas",
-      "Condensar os cromossomos e formar o fuso mitótico",
-    ],
-    correctIndex: 1,
-    explanation:
-      "Em G2, a célula verifica se o DNA foi corretamente duplicado (checkpoint G2/M), repara eventuais danos e sintetiza proteínas essenciais para a divisão, como as tubulinas (componentes do fuso mitótico) e as ciclinas mitóticas. A condensação dos cromossomos e a formação do fuso ocorrem na prófase da mitose.",
-  },
-  {
-    id: 8,
-    category: "interfase_g2",
-    categoryLabel: "Interfase — G2",
-    question:
-      "O checkpoint G2/M é ativado quando há danos no DNA após a replicação. A proteína p53, um supressor tumoral, desempenha papel central nesse processo. Qual é a consequência direta da ativação desse checkpoint?",
-    options: [
-      "A célula acelera a mitose para corrigir os erros durante a divisão",
-      "A célula é impedida de entrar em mitose até que os danos sejam reparados ou, em casos graves, é direcionada à apoptose",
-      "A célula retorna à fase S para replicar novamente o DNA danificado",
-      "O crossing over é ativado para aumentar a variabilidade genética",
-    ],
-    correctIndex: 1,
-    explanation:
-      "Quando o checkpoint G2/M detecta danos no DNA, a proteína p53 é estabilizada e ativa genes que bloqueiam a entrada em mitose (como o inibidor p21, que inativa o complexo Cdk1-Ciclina B). Isso dá tempo para o reparo do DNA. Se os danos forem irreparáveis, p53 ativa a via apoptótica, eliminando a célula danificada e prevenindo a transmissão de mutações.",
-  },
-
-  // ── MEIOSE II ─────────────────────────────────────────────
   {
     id: 36,
     category: "meiose_ii",
@@ -415,8 +318,6 @@ export function getQuestionForSquare(squareIndex: number): Question {
     explanation:
       "A Meiose II resulta na formação de quatro células haploides (n), cada uma contendo um conjunto simples de cromossomos. Este é o resultado final da meiose, que produz gametas ou esporos.",
   },
-
-  // ── MITOSE — CITOCINESE ───────────────────────────────────
   {
     id: 38,
     category: "mitose_citocinese",
@@ -449,8 +350,6 @@ export function getQuestionForSquare(squareIndex: number): Question {
     explanation:
       "Se a mitose (divisão nuclear) ocorrer normalmente, mas a citocinese (divisão citoplasmática) falhar, a célula resultante terá dois ou mais núcleos, tornando-se multinucleada. Isso pode levar a problemas no funcionamento celular e está associado a certas condições patológicas.",
   },
-
-  // ── MITOSE — TELOFASE ─────────────────────────────────────
   {
     id: 40,
     category: "mitose_telofase",
@@ -484,3 +383,12 @@ export function getQuestionForSquare(squareIndex: number): Question {
       "A telófase marca o retorno da célula a um estado mais próximo da interfase, com a descondensação dos cromossomos e a reconstituição das estruturas nucleares. É também a fase em que a citocinese se inicia, dividindo o citoplasma e completando a formação das duas células-filhas.",
   }
 ];
+
+export function getRandomQuestions(count: number): Question[] {
+  const shuffled = [...questions].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}
+
+export function getQuestionForSquare(squareIndex: number): Question {
+  return questions[squareIndex % questions.length];
+}

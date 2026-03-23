@@ -536,20 +536,20 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
                       {currentPlayer.position + 1} / {BOARD_SQUARES}
                     </div>
                   </div>
-                    {/* Mini progress bar */}
+
+                  {/* Mini progress bar */}
+                  <div
+                    className="w-full mt-1.5 rounded-full overflow-hidden"
+                    style={{ height: 4, background: "rgba(123,47,255,0.15)" }}
+                  >
                     <div
-                      className="w-full mt-1.5 rounded-full overflow-hidden"
-                      style={{ height: 4, background: "rgba(123,47,255,0.15)" }}
-                    >
-                      <div
-                        className="h-full rounded-full transition-all duration-500"
-                        style={{
-                          width: `${(currentPlayer.position / (BOARD_SQUARES - 1)) * 100}%`,
-                          background: `linear-gradient(90deg, ${currentPlayer.color}, ${currentPlayer.glowColor})`,
-                          boxShadow: `0 0 4px ${currentPlayer.color}`,
-                        }}
-                      />
-                    </div>
+                      className="h-full rounded-full transition-all duration-500"
+                      style={{
+                        width: `${(currentPlayer.position / (BOARD_SQUARES - 1)) * 100}%`,
+                        background: `linear-gradient(90deg, ${currentPlayer.color}, ${currentPlayer.glowColor})`,
+                        boxShadow: `0 0 4px ${currentPlayer.color}`,
+                      }}
+                    />
                   </div>
                 </div>
               )}
