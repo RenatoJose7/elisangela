@@ -29,6 +29,7 @@ export interface Player {
   position: number; // 0-indexed square position
   color: string;
   glowColor: string;
+  score: number;
 }
 
 export interface GameState {

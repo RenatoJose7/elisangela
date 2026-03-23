@@ -558,3 +558,80 @@ export function getRandomQuestions(count: number): Question[] {
 export function getQuestionForSquare(squareIndex: number): Question {
   return questions[squareIndex % questions.length];
 }
+
+  // ── NOVAS QUESTÕES ADICIONADAS ─────────────────────────────
+  {
+    id: 31,
+    category: "mitose_metafase",
+    categoryLabel: "Mitose — Metáfase",
+    question: "Na metáfase mitótica, os cromossomos atingem seu grau máximo de condensação. Qual estrutura é responsável por conectar os microtúbulos do fuso aos cromossomos?",
+    options: [
+      "Centrossomo",
+      "Cinetócoro",
+      "Nucléolo",
+      "Telômero"
+    ],
+    correctIndex: 1,
+    explanation: "O cinetócoro é uma estrutura proteica localizada no centrômero de cada cromátide, onde os microtúbulos do fuso se ligam para orientar o movimento dos cromossomos.",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/cell-metaphase-VVCrw7LRbBJfKQe3tWuWMP.webp"
+  },
+  {
+    id: 32,
+    category: "meiose_i",
+    categoryLabel: "Meiose I",
+    question: "A Meiose I é chamada de divisão reducional. Por que esse termo é utilizado para descrever essa etapa?",
+    options: [
+      "Porque reduz a quantidade de citoplasma nas células-filhas",
+      "Porque reduz o número de cromossomos pela metade (de 2n para n)",
+      "Porque reduz a velocidade de duplicação do DNA",
+      "Porque reduz o tamanho dos cromossomos durante a anáfase"
+    ],
+    correctIndex: 1,
+    explanation: "A Meiose I separa os cromossomos homólogos, resultando em duas células-filhas com metade do número original de cromossomos, passando de diploide (2n) para haploide (n).",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/meiosis-i-VVCrw7LRbBJfKQe3tWuWMP.webp"
+  },
+  {
+    id: 33,
+    category: "crossing_over",
+    categoryLabel: "Crossing Over",
+    question: "O crossing over (ou permutação) ocorre em qual subfase específica da Prófase I da Meiose?",
+    options: [
+      "Leptóteno",
+      "Zigóteno",
+      "Paquíteno",
+      "Diplóteno"
+    ],
+    correctIndex: 2,
+    explanation: "O crossing over, que é a troca de segmentos entre cromátides não-irmãs de cromossomos homólogos, ocorre durante o Paquíteno da Prófase I.",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/crossing-over-detail-VVCrw7LRbBJfKQe3tWuWMP.webp"
+  },
+  {
+    id: 34,
+    category: "mitose_anafase",
+    categoryLabel: "Mitose — Anáfase",
+    question: "O que caracteriza a Anáfase da mitose e a diferencia da Anáfase I da meiose?",
+    options: [
+      "Na mitose ocorre a separação de cromossomos homólogos",
+      "Na mitose ocorre a separação das cromátides-irmãs",
+      "Na mitose os cromossomos se descondensam",
+      "Na mitose o envelope nuclear se reconstitui"
+    ],
+    correctIndex: 1,
+    explanation: "Na Anáfase da mitose, as cromátides-irmãs são separadas e puxadas para polos opostos. Na Anáfase I da meiose, são os cromossomos homólogos que se separam.",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/cell-anaphase-VVCrw7LRbBJfKQe3tWuWMP.webp"
+  },
+  {
+    id: 35,
+    category: "interfase_s",
+    categoryLabel: "Interfase — Fase S",
+    question: "Se uma droga inibe a enzima DNA polimerase, em qual fase do ciclo celular a célula ficará estagnada?",
+    options: [
+      "G1",
+      "S",
+      "G2",
+      "Mitose"
+    ],
+    correctIndex: 1,
+    explanation: "A DNA polimerase é essencial para a replicação do DNA, que ocorre exclusivamente na fase S (Síntese) da interfase.",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/dna-replication-VVCrw7LRbBJfKQe3tWuWMP.webp"
+  }

@@ -27,6 +27,7 @@ export default function StartScreen({ onStart }: StartScreenProps) {
     "Jogador 4",
   ]);
   const [showInstructions, setShowInstructions] = useState(false);
+  const highScores = JSON.parse(localStorage.getItem("cosmic_high_scores") || "[]");
 
   const handleStart = () => {
     const players: Player[] = Array.from({ length: playerCount }, (_, i) => ({
@@ -35,6 +36,7 @@ export default function StartScreen({ onStart }: StartScreenProps) {
       position: 0,
       color: PLAYER_COLORS[i].color,
       glowColor: PLAYER_COLORS[i].glowColor,
+      score: 0,
     }));
     onStart(players);
   };
@@ -276,6 +278,41 @@ export default function StartScreen({ onStart }: StartScreenProps) {
           className="lg:w-64 flex flex-col gap-3 animate-slide-up"
           style={{ animationDelay: "0.1s" }}
         >
+          {/* Leaderboard */}
+          {highScores.length > 0 && (
+            <div
+              className="rounded-sm overflow-hidden mb-3"
+              style={{
+                background: "rgba(8, 5, 20, 0.92)",
+                border: "1px solid #FFD70040",
+                boxShadow: "0 0 12px #FFD70020",
+              }}
+            >
+              <div
+                className="px-4 py-2.5"
+                style={{
+                  background: "linear-gradient(90deg, rgba(255,215,0,0.2), transparent)",
+                  borderBottom: "1px solid #FFD70030",
+                }}
+              >
+                <span
+                  className="font-arcade"
+                  style={{ fontSize: "0.4rem", color: "#FFD700", textShadow: "0 0 6px #FFD700" }}
+                >
+                  TOP SCORES
+                </span>
+              </div>
+              <div className="p-3 flex flex-col gap-2">
+                {highScores.map((s: any, i: number) => (
+                  <div key={i} className="flex justify-between items-center font-vt323 text-[0.8rem]">
+                    <span style={{ color: i === 0 ? "#FFD700" : "#A090C0" }}>{i + 1}. {s.name}</span>
+                    <span style={{ color: "#00FF9F" }}>{s.score}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Topics covered */}
           <div
             className="rounded-sm overflow-hidden"

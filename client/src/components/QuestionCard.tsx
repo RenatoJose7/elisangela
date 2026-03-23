@@ -4,7 +4,7 @@
  * Efeito: rotateY 180deg ao clicar, revelando a pergunta
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Question } from "../data/questions";
 import { CATEGORY_COLORS } from "../data/questions";
 
@@ -14,6 +14,7 @@ interface QuestionCardProps {
   onFlip: () => void;
   selectedAnswer: number | null;
   onSelectAnswer: (index: number) => void;
+  onTimeout?: () => void;
   feedbackType: "correct" | "incorrect" | null;
   disabled?: boolean;
 }
@@ -27,9 +28,28 @@ export default function QuestionCard({
   onFlip,
   selectedAnswer,
   onSelectAnswer,
+  onTimeout,
   feedbackType,
   disabled,
 }: QuestionCardProps) {
+  const [timeLeft, setTimeLeft] = useState(20);
+
+  useEffect(() => {
+    if (isFlipped && selectedAnswer === null && timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    } else if (timeLeft === 0 && selectedAnswer === null && onTimeout) {
+      onTimeout();
+    }
+  }, [isFlipped, selectedAnswer, timeLeft, onTimeout]);
+
+  useEffect(() => {
+    if (!isFlipped) {
+      setTimeLeft(20);
+    }
+  }, [isFlipped]);
   const categoryColor = CATEGORY_COLORS[question.category] || "#7B2FFF";
   const optionLetters = ["A", "B", "C", "D"];
   const rgb = hexToRgb(categoryColor);
@@ -188,6 +208,18 @@ export default function QuestionCard({
               }}
             >
               {question.categoryLabel}
+            </div>
+            {/* Timer Display */}
+            <div
+              className="ml-auto font-arcade"
+              style={{
+                fontSize: "0.5rem",
+                color: timeLeft <= 5 ? "#FF3366" : categoryColor,
+                textShadow: `0 0 8px ${timeLeft <= 5 ? "#FF3366" : categoryColor}`,
+                animation: timeLeft <= 5 ? "pulse 0.5s infinite" : "none",
+              }}
+            >
+              TEMPO: {timeLeft}s
             </div>
           </div>
 

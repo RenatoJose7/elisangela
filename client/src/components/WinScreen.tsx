@@ -16,8 +16,17 @@ export default function WinScreen({ winner, onRestart }: WinScreenProps) {
 
   useEffect(() => {
     const interval = setInterval(() => setFrame((f) => f + 1), 100);
+    
+    // Save high score
+    const highScores = JSON.parse(localStorage.getItem("cosmic_high_scores") || "[]");
+    const newScore = { name: winner.name, score: winner.score, date: new Date().toLocaleDateString() };
+    const updatedScores = [...highScores, newScore]
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 5);
+    localStorage.setItem("cosmic_high_scores", JSON.stringify(updatedScores));
+
     return () => clearInterval(interval);
-  }, []);
+  }, [winner]);
 
   const trophyChars = ["🏆", "⭐", "🏆", "✨"];
   const trophy = trophyChars[frame % trophyChars.length];
@@ -90,6 +99,16 @@ export default function WinScreen({ winner, onRestart }: WinScreenProps) {
               }}
             >
               {winner.name}
+            </div>
+            <div
+              className="font-arcade mt-2"
+              style={{
+                fontSize: "0.5rem",
+                color: "#FFD700",
+                textShadow: "0 0 10px #FFD700",
+              }}
+            >
+              PONTUAÇÃO FINAL: {winner.score}
             </div>
           </div>
 

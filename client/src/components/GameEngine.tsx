@@ -41,6 +41,8 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
     playerSkipsTurn: false,
   });
 
+  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+
   const [flashClass, setFlashClass] = useState("");
   const rollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const moveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -50,6 +52,7 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
   // ── Roll Dice ──────────────────────────────────────────────
   // Função para tocar som
   const playSound = (type: "dice" | "bonus" | "correct" | "incorrect") => {
+    if (!isSoundEnabled) return;
     const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
     const oscillator = audioContext.createOscillator();
     const gainNode = audioContext.createGain();
@@ -204,10 +207,31 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
         selectedAnswer: answerIndex,
         feedbackType: isCorrect ? "correct" : "incorrect",
         phase: "feedback",
+        players: prev.players.map((p, i) => 
+          i === prev.currentPlayerIndex && isCorrect 
+            ? { ...p, score: p.score + 100 } 
+            : p
+        )
       }));
     },
     [gameState.phase, gameState.selectedAnswer, gameState.currentQuestion]
   );
+
+  const handleTimeout = useCallback(() => {
+    if (gameState.phase !== "question" || gameState.selectedAnswer !== null) return;
+    
+    playSound("incorrect");
+    setFlashClass("flash-red");
+    setTimeout(() => setFlashClass(""), 600);
+
+    setGameState((prev) => ({
+      ...prev,
+      selectedAnswer: -1, // No answer selected
+      feedbackType: "incorrect",
+      phase: "feedback",
+      feedbackMessage: "O TEMPO ACABOU! VOCÊ PERDEU O TURNO.",
+    }));
+  }, [gameState.phase, gameState.selectedAnswer]);
 
   // ── Close Feedback ─────────────────────────────────────────
   const handleCloseFeedback = useCallback(() => {
@@ -286,16 +310,30 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
           boxShadow: "0 2px 20px rgba(123,47,255,0.2)",
         }}
       >
-        {/* Title */}
-        <div
-            className="font-arcade hidden sm:block"
+        {/* Title & Sound Control */}
+        <div className="flex items-center gap-4">
+          <div
+              className="font-arcade hidden sm:block"
+              style={{
+                fontSize: "0.55rem",
+              color: "#7B2FFF",
+              textShadow: "0 0 8px #7B2FFF",
+            }}
+          >
+            COSMIC CELL INVASION
+          </div>
+          <button
+            onClick={() => setIsSoundEnabled(!isSoundEnabled)}
+            className="font-arcade text-[10px] px-2 py-1 rounded border border-[#7B2FFF] transition-all"
             style={{
-              fontSize: "0.55rem",
-            color: "#7B2FFF",
-            textShadow: "0 0 8px #7B2FFF",
-          }}
-        >
-          COSMIC CELL INVASION
+              color: isSoundEnabled ? "#00FF9F" : "#FF3366",
+              borderColor: isSoundEnabled ? "#00FF9F50" : "#FF336650",
+              background: "rgba(0,0,0,0.3)",
+              textShadow: `0 0 5px ${isSoundEnabled ? "#00FF9F" : "#FF3366"}`,
+            }}
+          >
+            {isSoundEnabled ? "🔊 SOM: ON" : "🔇 SOM: OFF"}
+          </button>
         </div>
 
         {/* Phase indicator */}
@@ -499,15 +537,16 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
 
               {/* Card section */}
               {isCardPhase && gameState.currentQuestion && (
-                <QuestionCard
-                  question={gameState.currentQuestion}
-                  isFlipped={gameState.isCardFlipped}
-                  onFlip={handleFlipCard}
-                  selectedAnswer={gameState.selectedAnswer}
-                  onSelectAnswer={handleSelectAnswer}
-                  feedbackType={gameState.feedbackType}
-                  disabled={gameState.phase === "feedback"}
-                />
+<QuestionCard
+            question={gameState.currentQuestion}
+            isFlipped={gameState.isCardFlipped}
+            onFlip={handleFlipCard}
+            selectedAnswer={gameState.selectedAnswer}
+            onSelectAnswer={handleSelectAnswer}
+            onTimeout={handleTimeout}
+            feedbackType={gameState.feedbackType}
+            disabled={gameState.phase !== "question"}
+          />
               )}
             </div>
           </div>
