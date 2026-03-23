@@ -50,152 +50,42 @@ export default function QuestionCard({
       setTimeLeft(20);
     }
   }, [isFlipped]);
+
   const categoryColor = CATEGORY_COLORS[question.category] || "#7B2FFF";
   const optionLetters = ["A", "B", "C", "D"];
   const rgb = hexToRgb(categoryColor);
 
   return (
     <div
-      className="card-container fixed inset-0 flex items-center justify-center z-50"
+      className="fixed inset-0 z-50 flex items-center justify-center"
       style={{
         background: "rgba(0, 0, 0, 0.7)",
-        pointerEvents: "auto",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
         visibility: isFlipped ? "visible" : "hidden",
         opacity: isFlipped ? 1 : 0,
         transition: "opacity 0.3s ease-in-out",
-        overflow: "auto",
+        pointerEvents: isFlipped ? "auto" : "none",
       }}
     >
-      <div className="w-full" style={{ pointerEvents: "auto", padding: "1rem", display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "100%", paddingTop: "2rem", paddingBottom: "2rem" }}>
-        <div style={{ maxWidth: "600px", width: "100%", maxHeight: "calc(100vh - 4rem)", overflow: "auto" }}>
+      <div
+        className="w-full max-w-2xl mx-auto rounded-sm overflow-hidden"
+        style={{
+          background: "#0A0318",
+          border: `2px solid ${categoryColor}`,
+          boxShadow: `0 0 15px ${categoryColor}50, 0 0 30px ${categoryColor}25`,
+          maxHeight: "90vh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {/* Category header */}
         <div
-          className={`card-inner ${isFlipped ? "flipped" : ""}`}
-          style={{ height: "100%" }}
-        >
-          {/* ── CARD FRONT (closed) ─────────────────────────── */}
-          <div
-            className="card-front rounded-sm overflow-hidden cursor-pointer select-none"
-            onClick={!isFlipped ? onFlip : undefined}
-            style={{
-              background: "#0D0520",
-              border: `3px solid ${categoryColor}`,
-              boxShadow: `0 0 20px ${categoryColor}70, 0 0 40px ${categoryColor}40`,
-              height: "280px",
-            }}
-          >
-          <div
-            className="w-full h-full relative flex flex-col items-center justify-center gap-3"
-            style={{
-              backgroundImage: `url(${CARD_BACK_URL})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            {/* Dark overlay */}
-            <div
-              className="absolute inset-0"
-              style={{ background: "rgba(8, 3, 25, 0.6)" }}
-            />
-
-            {/* Category badge */}
-            <div
-              className="relative z-10 font-arcade text-center px-3 py-1.5 rounded-sm"
-              style={{
-                fontSize: "0.42rem",
-                color: categoryColor,
-                border: `1px solid ${categoryColor}80`,
-                background: `rgba(${rgb}, 0.2)`,
-                boxShadow: `0 0 8px ${categoryColor}50`,
-                textShadow: `0 0 8px ${categoryColor}`,
-              }}
-            >
-              {question.categoryLabel}
-            </div>
-
-            {/* Question mark */}
-            <div
-              className="relative z-10 font-vt323"
-              style={{
-                fontSize: "7rem",
-                color: categoryColor,
-                textShadow: `0 0 30px ${categoryColor}, 0 0 60px ${categoryColor}60`,
-                lineHeight: 1,
-                animation: "neonPulse 2s ease-in-out infinite",
-              }}
-            >
-              ?
-            </div>
-
-            {/* Click prompt */}
-            <div
-              className="relative z-10 font-arcade text-center"
-              style={{
-                fontSize: "0.6rem",
-                color: "#E0AAFF",
-                textShadow: "0 0 10px #7B2FFF",
-                letterSpacing: "0.08em",
-              }}
-            >
-              CLIQUE PARA REVELAR
-            </div>
-
-            {/* Corner decorations */}
-            <div
-              className="absolute top-2 left-2 w-5 h-5 pointer-events-none"
-              style={{
-                borderTop: `1.5px solid ${categoryColor}80`,
-                borderLeft: `1.5px solid ${categoryColor}80`,
-              }}
-            />
-            <div
-              className="absolute top-2 right-2 w-5 h-5 pointer-events-none"
-              style={{
-                borderTop: `1.5px solid ${categoryColor}80`,
-                borderRight: `1.5px solid ${categoryColor}80`,
-              }}
-            />
-            <div
-              className="absolute bottom-2 left-2 w-5 h-5 pointer-events-none"
-              style={{
-                borderBottom: `1.5px solid ${categoryColor}80`,
-                borderLeft: `1.5px solid ${categoryColor}80`,
-              }}
-            />
-            <div
-              className="absolute bottom-2 right-2 w-5 h-5 pointer-events-none"
-              style={{
-                borderBottom: `1.5px solid ${categoryColor}80`,
-                borderRight: `1.5px solid ${categoryColor}80`,
-              }}
-            />
-          </div>
-        </div>
-
-        {/* ── CARD BACK (question revealed) ──────────────── */}
-        <div
-          className="card-back rounded-sm overflow-hidden"
+          className="px-6 py-3 flex items-center justify-between flex-shrink-0"
           style={{
-            background: "#0A0318",
-            border: `2px solid ${categoryColor}`,
-            boxShadow: `0 0 15px ${categoryColor}50, 0 0 30px ${categoryColor}25`,
-            minHeight: "auto",
-            height: "auto",
-            maxHeight: "calc(100vh - 6rem)",
-            display: "flex",
-            flexDirection: "column",
+            background: `linear-gradient(90deg, rgba(${rgb}, 0.2), rgba(${rgb}, 0.05))`,
+            borderBottom: `1px solid ${categoryColor}35`,
           }}
         >
-          {/* Category header */}
-          <div
-            className="px-4 py-2.5 flex items-center gap-2"
-            style={{
-              background: `linear-gradient(90deg, rgba(${rgb}, 0.2), rgba(${rgb}, 0.05))`,
-              borderBottom: `1px solid ${categoryColor}35`,
-            }}
-          >
+          <div className="flex items-center gap-2">
             <div
               className="w-2 h-2 rounded-full flex-shrink-0"
               style={{
@@ -213,170 +103,189 @@ export default function QuestionCard({
             >
               {question.categoryLabel}
             </div>
-            {/* Timer Display */}
-            <div
-              className="ml-auto font-arcade"
-              style={{
-                fontSize: "0.5rem",
-                color: timeLeft <= 5 ? "#FF3366" : categoryColor,
-                textShadow: `0 0 8px ${timeLeft <= 5 ? "#FF3366" : categoryColor}`,
-                animation: timeLeft <= 5 ? "pulse 0.5s infinite" : "none",
-              }}
-            >
-              TEMPO: {timeLeft}s
-            </div>
           </div>
-
-          {/* Question text and image */}
+          {/* Timer Display */}
           <div
-            className="px-6 py-5"
-            style={{ borderBottom: `1px solid ${categoryColor}20` }}
+            className="font-arcade"
+            style={{
+              fontSize: "0.5rem",
+              color: timeLeft <= 5 ? "#FF3366" : categoryColor,
+              textShadow: `0 0 8px ${timeLeft <= 5 ? "#FF3366" : categoryColor}`,
+              animation: timeLeft <= 5 ? "pulse 0.5s infinite" : "none",
+            }}
           >
-            {question.image && (
-              <div className="mb-5 rounded-sm overflow-hidden flex items-center justify-center" style={{ height: "220px", background: "rgba(123,47,255,0.1)", border: `1px solid ${categoryColor}30` }}>
-                <img src={question.image} alt="Pergunta" style={{ width: "100%", height: "100%", objectFit: "contain", padding: "0.8rem" }} />
-              </div>
-            )}
-            <p
-              className="font-orbitron leading-relaxed"
+            TEMPO: {timeLeft}s
+          </div>
+        </div>
+
+        {/* Question text and image */}
+        <div
+          className="px-6 py-5 flex-shrink-0 overflow-y-auto"
+          style={{
+            borderBottom: `1px solid ${categoryColor}20`,
+            maxHeight: "35vh",
+          }}
+        >
+          {question.image && (
+            <div
+              className="mb-5 rounded-sm overflow-hidden flex items-center justify-center"
               style={{
-                fontSize: "1rem",
-                color: "#D0C0F0",
-                lineHeight: 1.8,
+                height: "200px",
+                background: "rgba(123,47,255,0.1)",
+                border: `1px solid ${categoryColor}30`,
               }}
             >
-              {question.question}
-            </p>
-          </div>
+              <img
+                src={question.image}
+                alt="Pergunta"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                  padding: "0.8rem",
+                }}
+              />
+            </div>
+          )}
+          <p
+            className="font-orbitron leading-relaxed"
+            style={{
+              fontSize: "1rem",
+              color: "#D0C0F0",
+              lineHeight: 1.8,
+            }}
+          >
+            {question.question}
+          </p>
+        </div>
 
-          {/* Answer options */}
-          <div className="px-4 py-3 flex flex-col gap-2 overflow-y-auto flex-1" style={{ minHeight: "0" }}>
-            {question.options.map((option, i) => {
-              const isSelected = selectedAnswer === i;
-              const isCorrect = i === question.correctIndex;
-              const showCorrectHighlight =
-                feedbackType === "incorrect" && isCorrect && selectedAnswer !== null;
+        {/* Answer options */}
+        <div
+          className="px-4 py-3 flex flex-col gap-2 overflow-y-auto flex-1"
+          style={{ minHeight: "0" }}
+        >
+          {question.options.map((option, i) => {
+            const isSelected = selectedAnswer === i;
+            const isCorrect = i === question.correctIndex;
+            const showCorrectHighlight =
+              feedbackType === "incorrect" && isCorrect && selectedAnswer !== null;
 
-              let borderColor = `${categoryColor}45`;
-              let bgColor = `rgba(${rgb}, 0.04)`;
-              let textColor = "#9080B0";
-              let labelColor = `${categoryColor}80`;
+            let borderColor = `${categoryColor}45`;
+            let bgColor = `rgba(${rgb}, 0.04)`;
+            let textColor = "#9080B0";
+            let labelColor = `${categoryColor}80`;
 
-              if (isSelected && feedbackType === "correct") {
-                borderColor = "#00FF9F";
-                bgColor = "rgba(0,255,159,0.12)";
-                textColor = "#AFFFDF";
-                labelColor = "#00FF9F";
-              } else if (isSelected && feedbackType === "incorrect") {
-                borderColor = "#FF3366";
-                bgColor = "rgba(255,51,102,0.12)";
-                textColor = "#FF9AB5";
-                labelColor = "#FF3366";
-              } else if (showCorrectHighlight) {
-                borderColor = "#00FF9F80";
-                bgColor = "rgba(0,255,159,0.08)";
-                textColor = "#AFFFDF";
-                labelColor = "#00FF9F";
-              } else if (isSelected) {
-                borderColor = categoryColor;
-                bgColor = `rgba(${rgb}, 0.15)`;
-                textColor = "#E0AAFF";
-                labelColor = categoryColor;
-              }
+            if (isSelected && feedbackType === "correct") {
+              borderColor = "#00FF9F";
+              bgColor = "rgba(0,255,159,0.12)";
+              textColor = "#AFFFDF";
+              labelColor = "#00FF9F";
+            } else if (isSelected && feedbackType === "incorrect") {
+              borderColor = "#FF3366";
+              bgColor = "rgba(255,51,102,0.12)";
+              textColor = "#FF9AB5";
+              labelColor = "#FF3366";
+            } else if (showCorrectHighlight) {
+              borderColor = "#00FF9F80";
+              bgColor = "rgba(0,255,159,0.08)";
+              textColor = "#AFFFDF";
+              labelColor = "#00FF9F";
+            } else if (isSelected) {
+              borderColor = categoryColor;
+              bgColor = `rgba(${rgb}, 0.15)`;
+              textColor = "#E0AAFF";
+              labelColor = categoryColor;
+            }
 
-              const canSelect = !disabled && selectedAnswer === null;
+            const canSelect = !disabled && selectedAnswer === null;
 
-              return (
-                <button
-                  key={i}
-                  onClick={() => canSelect && onSelectAnswer(i)}
-                  disabled={!canSelect}
-                  className="w-full text-left rounded-sm transition-all duration-200 flex items-start gap-2"
+            return (
+              <button
+                key={i}
+                onClick={() => canSelect && onSelectAnswer(i)}
+                disabled={!canSelect}
+                className="w-full text-left rounded-sm transition-all duration-200 flex items-start gap-2"
+                style={{
+                  padding: "0.5rem 0.7rem",
+                  background: bgColor,
+                  border: `1.5px solid ${borderColor}`,
+                  boxShadow:
+                    isSelected || showCorrectHighlight
+                      ? `0 0 8px ${borderColor}50`
+                      : "none",
+                  cursor: canSelect ? "pointer" : "default",
+                }}
+                onMouseEnter={(e) => {
+                  if (canSelect) {
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = categoryColor;
+                    (e.currentTarget as HTMLButtonElement).style.background = `rgba(${rgb}, 0.1)`;
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (canSelect && selectedAnswer === null) {
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = `${categoryColor}45`;
+                    (e.currentTarget as HTMLButtonElement).style.background = `rgba(${rgb}, 0.04)`;
+                  }
+                }}
+              >
+                {/* Letter badge */}
+                <span
+                  className="font-arcade flex-shrink-0"
                   style={{
-                    padding: "0.5rem 0.7rem",
-                    background: bgColor,
-                    border: `1.5px solid ${borderColor}`,
-                    boxShadow:
-                      isSelected || showCorrectHighlight
-                        ? `0 0 8px ${borderColor}50`
-                        : "none",
-                    cursor: canSelect ? "pointer" : "default",
-                    transform: canSelect ? undefined : undefined,
-                  }}
-                  onMouseEnter={(e) => {
-                    if (canSelect) {
-                      (e.currentTarget as HTMLButtonElement).style.borderColor = categoryColor;
-                      (e.currentTarget as HTMLButtonElement).style.background = `rgba(${rgb}, 0.1)`;
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (canSelect && selectedAnswer === null) {
-                      (e.currentTarget as HTMLButtonElement).style.borderColor = `${categoryColor}45`;
-                      (e.currentTarget as HTMLButtonElement).style.background = `rgba(${rgb}, 0.04)`;
-                    }
+                    minWidth: "24px",
+                    fontSize: "0.7rem",
+                    color: labelColor,
+                    textShadow: `0 0 5px ${labelColor}`,
+                    marginTop: "0.12rem",
                   }}
                 >
-                  {/* Letter badge */}
+                  {optionLetters[i]}
+                </span>
+
+                {/* Option text */}
+                <span
+                  className="font-orbitron flex-1"
+                  style={{
+                    fontSize: "0.9rem",
+                    color: textColor,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  {option}
+                </span>
+
+                {/* Result icon */}
+                {isSelected && feedbackType && (
                   <span
-                    className="font-arcade flex-shrink-0"
+                    className="ml-auto flex-shrink-0 font-vt323"
                     style={{
-                      minWidth: "24px",
-                      fontSize: "0.7rem",
-                      color: labelColor,
-                      textShadow: `0 0 5px ${labelColor}`,
-                      marginTop: "0.12rem",
+                      fontSize: "1.6rem",
+                      color: feedbackType === "correct" ? "#00FF9F" : "#FF3366",
+                      textShadow:
+                        feedbackType === "correct"
+                          ? "0 0 10px #00FF9F"
+                          : "0 0 10px #FF3366",
                     }}
                   >
-                    {optionLetters[i]}
+                    {feedbackType === "correct" ? "✓" : "✗"}
                   </span>
-
-                  {/* Option text */}
+                )}
+                {showCorrectHighlight && (
                   <span
-                    className="font-orbitron flex-1"
+                    className="ml-auto flex-shrink-0 font-vt323"
                     style={{
-                      fontSize: "0.9rem",
-                      color: textColor,
-                      lineHeight: 1.5,
+                      fontSize: "1.6rem",
+                      color: "#00FF9F",
+                      textShadow: "0 0 10px #00FF9F",
                     }}
                   >
-                    {option}
+                    ✓
                   </span>
-
-                  {/* Result icon */}
-                  {isSelected && feedbackType && (
-                    <span
-                      className="ml-auto flex-shrink-0 font-vt323"
-                      style={{
-                        fontSize: "1.6rem",
-                        color: feedbackType === "correct" ? "#00FF9F" : "#FF3366",
-                        textShadow:
-                          feedbackType === "correct"
-                            ? "0 0 10px #00FF9F"
-                            : "0 0 10px #FF3366",
-                      }}
-                    >
-                      {feedbackType === "correct" ? "✓" : "✗"}
-                    </span>
-                  )}
-                  {showCorrectHighlight && (
-                    <span
-                      className="ml-auto flex-shrink-0 font-vt323"
-                      style={{
-                        fontSize: "1.6rem",
-                        color: "#00FF9F",
-                        textShadow: "0 0 10px #00FF9F",
-                      }}
-                    >
-                      ✓
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
+                )}
+              </button>
+            );
+          })}
         </div>
-        </div>
-      </div>
       </div>
     </div>
   );
