@@ -19,9 +19,6 @@ interface QuestionCardProps {
   disabled?: boolean;
 }
 
-const CARD_BACK_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/card-back-a5NvPY7cr87FS5kyNudRw4.webp";
-
 export default function QuestionCard({
   question,
   isFlipped,
@@ -118,19 +115,19 @@ export default function QuestionCard({
           </div>
         </div>
 
-        {/* Question text and image */}
+        {/* Question text and image - Content Area */}
         <div
-          className="px-6 py-5 flex-shrink-0 overflow-y-auto"
+          className="px-6 py-5 overflow-y-auto flex-1 custom-scrollbar"
           style={{
             borderBottom: `1px solid ${categoryColor}20`,
-            maxHeight: "35vh",
           }}
         >
           {question.image && (
             <div
               className="mb-5 rounded-sm overflow-hidden flex items-center justify-center"
               style={{
-                height: "200px",
+                height: "auto",
+                maxHeight: "250px",
                 background: "rgba(123,47,255,0.1)",
                 border: `1px solid ${categoryColor}30`,
               }}
@@ -139,8 +136,8 @@ export default function QuestionCard({
                 src={question.image}
                 alt="Pergunta"
                 style={{
-                  width: "100%",
-                  height: "100%",
+                  maxWidth: "100%",
+                  maxHeight: "250px",
                   objectFit: "contain",
                   padding: "0.8rem",
                 }}
@@ -148,7 +145,7 @@ export default function QuestionCard({
             </div>
           )}
           <p
-            className="font-orbitron leading-relaxed"
+            className="font-orbitron leading-relaxed mb-6"
             style={{
               fontSize: "1rem",
               color: "#D0C0F0",
@@ -157,134 +154,134 @@ export default function QuestionCard({
           >
             {question.question}
           </p>
-        </div>
 
-        {/* Answer options */}
-        <div
-          className="px-4 py-3 flex flex-col gap-2 overflow-y-auto flex-1"
-          style={{ minHeight: "0" }}
-        >
-          {question.options.map((option, i) => {
-            const isSelected = selectedAnswer === i;
-            const isCorrect = i === question.correctIndex;
-            const showCorrectHighlight =
-              feedbackType === "incorrect" && isCorrect && selectedAnswer !== null;
+          {/* Answer options moved inside scroll area for better mobile support */}
+          <div
+            className="flex flex-col gap-3"
+            style={{ minHeight: "0" }}
+          >
+            {question.options.map((option, i) => {
+              const isSelected = selectedAnswer === i;
+              const isCorrect = i === question.correctIndex;
+              const showCorrectHighlight =
+                feedbackType === "incorrect" && isCorrect && selectedAnswer !== null;
 
-            let borderColor = `${categoryColor}45`;
-            let bgColor = `rgba(${rgb}, 0.04)`;
-            let textColor = "#9080B0";
-            let labelColor = `${categoryColor}80`;
+              let borderColor = `${categoryColor}45`;
+              let bgColor = `rgba(${rgb}, 0.04)`;
+              let textColor = "#9080B0";
+              let labelColor = `${categoryColor}80`;
 
-            if (isSelected && feedbackType === "correct") {
-              borderColor = "#00FF9F";
-              bgColor = "rgba(0,255,159,0.12)";
-              textColor = "#AFFFDF";
-              labelColor = "#00FF9F";
-            } else if (isSelected && feedbackType === "incorrect") {
-              borderColor = "#FF3366";
-              bgColor = "rgba(255,51,102,0.12)";
-              textColor = "#FF9AB5";
-              labelColor = "#FF3366";
-            } else if (showCorrectHighlight) {
-              borderColor = "#00FF9F80";
-              bgColor = "rgba(0,255,159,0.08)";
-              textColor = "#AFFFDF";
-              labelColor = "#00FF9F";
-            } else if (isSelected) {
-              borderColor = categoryColor;
-              bgColor = `rgba(${rgb}, 0.15)`;
-              textColor = "#E0AAFF";
-              labelColor = categoryColor;
-            }
+              if (isSelected && feedbackType === "correct") {
+                borderColor = "#00FF9F";
+                bgColor = "rgba(0,255,159,0.12)";
+                textColor = "#AFFFDF";
+                labelColor = "#00FF9F";
+              } else if (isSelected && feedbackType === "incorrect") {
+                borderColor = "#FF3366";
+                bgColor = "rgba(255,51,102,0.12)";
+                textColor = "#FF9AB5";
+                labelColor = "#FF3366";
+              } else if (showCorrectHighlight) {
+                borderColor = "#00FF9F80";
+                bgColor = "rgba(0,255,159,0.08)";
+                textColor = "#AFFFDF";
+                labelColor = "#00FF9F";
+              } else if (isSelected) {
+                borderColor = categoryColor;
+                bgColor = `rgba(${rgb}, 0.15)`;
+                textColor = "#E0AAFF";
+                labelColor = categoryColor;
+              }
 
-            const canSelect = !disabled && selectedAnswer === null;
+              const canSelect = !disabled && selectedAnswer === null;
 
-            return (
-              <button
-                key={i}
-                onClick={() => canSelect && onSelectAnswer(i)}
-                disabled={!canSelect}
-                className="w-full text-left rounded-sm transition-all duration-200 flex items-start gap-2"
-                style={{
-                  padding: "0.5rem 0.7rem",
-                  background: bgColor,
-                  border: `1.5px solid ${borderColor}`,
-                  boxShadow:
-                    isSelected || showCorrectHighlight
-                      ? `0 0 8px ${borderColor}50`
-                      : "none",
-                  cursor: canSelect ? "pointer" : "default",
-                }}
-                onMouseEnter={(e) => {
-                  if (canSelect) {
-                    (e.currentTarget as HTMLButtonElement).style.borderColor = categoryColor;
-                    (e.currentTarget as HTMLButtonElement).style.background = `rgba(${rgb}, 0.1)`;
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (canSelect && selectedAnswer === null) {
-                    (e.currentTarget as HTMLButtonElement).style.borderColor = `${categoryColor}45`;
-                    (e.currentTarget as HTMLButtonElement).style.background = `rgba(${rgb}, 0.04)`;
-                  }
-                }}
-              >
-                {/* Letter badge */}
-                <span
-                  className="font-arcade flex-shrink-0"
+              return (
+                <button
+                  key={i}
+                  onClick={() => canSelect && onSelectAnswer(i)}
+                  disabled={!canSelect}
+                  className="w-full text-left rounded-sm transition-all duration-200 flex items-start gap-3"
                   style={{
-                    minWidth: "24px",
-                    fontSize: "0.7rem",
-                    color: labelColor,
-                    textShadow: `0 0 5px ${labelColor}`,
-                    marginTop: "0.12rem",
+                    padding: "0.7rem 1rem",
+                    background: bgColor,
+                    border: `1.5px solid ${borderColor}`,
+                    boxShadow:
+                      isSelected || showCorrectHighlight
+                        ? `0 0 8px ${borderColor}50`
+                        : "none",
+                    cursor: canSelect ? "pointer" : "default",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (canSelect) {
+                      (e.currentTarget as HTMLButtonElement).style.borderColor = categoryColor;
+                      (e.currentTarget as HTMLButtonElement).style.background = `rgba(${rgb}, 0.1)`;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (canSelect && selectedAnswer === null) {
+                      (e.currentTarget as HTMLButtonElement).style.borderColor = `${categoryColor}45`;
+                      (e.currentTarget as HTMLButtonElement).style.background = `rgba(${rgb}, 0.04)`;
+                    }
                   }}
                 >
-                  {optionLetters[i]}
-                </span>
-
-                {/* Option text */}
-                <span
-                  className="font-orbitron flex-1"
-                  style={{
-                    fontSize: "0.9rem",
-                    color: textColor,
-                    lineHeight: 1.5,
-                  }}
-                >
-                  {option}
-                </span>
-
-                {/* Result icon */}
-                {isSelected && feedbackType && (
+                  {/* Letter badge */}
                   <span
-                    className="ml-auto flex-shrink-0 font-vt323"
+                    className="font-arcade flex-shrink-0"
                     style={{
-                      fontSize: "1.6rem",
-                      color: feedbackType === "correct" ? "#00FF9F" : "#FF3366",
-                      textShadow:
-                        feedbackType === "correct"
-                          ? "0 0 10px #00FF9F"
-                          : "0 0 10px #FF3366",
+                      minWidth: "24px",
+                      fontSize: "0.7rem",
+                      color: labelColor,
+                      textShadow: `0 0 5px ${labelColor}`,
+                      marginTop: "0.12rem",
                     }}
                   >
-                    {feedbackType === "correct" ? "✓" : "✗"}
+                    {optionLetters[i]}
                   </span>
-                )}
-                {showCorrectHighlight && (
+
+                  {/* Option text */}
                   <span
-                    className="ml-auto flex-shrink-0 font-vt323"
+                    className="font-orbitron flex-1"
                     style={{
-                      fontSize: "1.6rem",
-                      color: "#00FF9F",
-                      textShadow: "0 0 10px #00FF9F",
+                      fontSize: "0.9rem",
+                      color: textColor,
+                      lineHeight: 1.5,
                     }}
                   >
-                    ✓
+                    {option}
                   </span>
-                )}
-              </button>
-            );
-          })}
+
+                  {/* Result icon */}
+                  {isSelected && feedbackType && (
+                    <span
+                      className="ml-auto flex-shrink-0 font-vt323"
+                      style={{
+                        fontSize: "1.6rem",
+                        color: feedbackType === "correct" ? "#00FF9F" : "#FF3366",
+                        textShadow:
+                          feedbackType === "correct"
+                            ? "0 0 10px #00FF9F"
+                            : "0 0 10px #FF3366",
+                      }}
+                    >
+                      {feedbackType === "correct" ? "✓" : "✗"}
+                    </span>
+                  )}
+                  {showCorrectHighlight && (
+                    <span
+                      className="ml-auto flex-shrink-0 font-vt323"
+                      style={{
+                        fontSize: "1.6rem",
+                        color: "#00FF9F",
+                        textShadow: "0 0 10px #00FF9F",
+                      }}
+                    >
+                      ✓
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

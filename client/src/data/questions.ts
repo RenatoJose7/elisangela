@@ -151,7 +151,7 @@ export const questions: Question[] = [
     options: [
       "Todas as células-filhas serão radioativas",
       "Nenhuma célula-filha será radioativa",
-      "Metade das células-filhas será radioativa e a outra metade não",
+      "Metade das células-filhas será radioativas e a outra metade não",
       "Apenas as células que completaram a fase S serão radioativas",
     ],
     correctIndex: 0,
@@ -224,7 +224,7 @@ export const questions: Question[] = [
     ],
     correctIndex: 1,
     explanation: "O cinetócoro é uma estrutura proteica localizada no centrômero de cada cromátide, onde os microtúbulos do fuso se ligam para orientar o movimento dos cromossomos.",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/cell-metaphase-VVCrw7LRbBJfKQe3tWuWMP.webp"
+    image: "/images/metaphase.jpg"
   },
   {
     id: 32,
@@ -239,7 +239,7 @@ export const questions: Question[] = [
     ],
     correctIndex: 1,
     explanation: "A Meiose I separa os cromossomos homólogos, resultando em duas células-filhas com metade do número original de cromossomos, passando de diploide (2n) para haploide (n).",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/meiosis-i-VVCrw7LRbBJfKQe3tWuWMP.webp"
+    image: "/images/meiosis-i.png"
   },
   {
     id: 33,
@@ -254,7 +254,7 @@ export const questions: Question[] = [
     ],
     correctIndex: 2,
     explanation: "O crossing over, que é a troca de segmentos entre cromátides não-irmãs de cromossomos homólogos, ocorre durante o Paquíteno da Prófase I.",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/crossing-over-detail-VVCrw7LRbBJfKQe3tWuWMP.webp"
+    image: "/images/crossing-over.jpg"
   },
   {
     id: 34,
@@ -269,7 +269,7 @@ export const questions: Question[] = [
     ],
     correctIndex: 1,
     explanation: "Na Anáfase da mitose, as cromátides-irmãs são separadas e puxadas para polos opostos. Na Anáfase I da meiose, são os cromossomos homólogos que se separam.",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/cell-anaphase-VVCrw7LRbBJfKQe3tWuWMP.webp"
+    image: "/images/anaphase.jpg"
   },
   {
     id: 35,
@@ -284,7 +284,7 @@ export const questions: Question[] = [
     ],
     correctIndex: 1,
     explanation: "A DNA polimerase é essencial para a replicação do DNA, que ocorre exclusivamente na fase S (Síntese) da interfase.",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/dna-replication-VVCrw7LRbBJfKQe3tWuWMP.webp"
+    image: "/images/dna-replication.png"
   },
   {
     id: 36,
@@ -381,7 +381,7 @@ export const questions: Question[] = [
     correctIndex: 3,
     explanation:
       "A telófase marca o retorno da célula a um estado mais próximo da interfase, com a descondensação dos cromossomos e a reconstituição das estruturas nucleares. É também a fase em que a citocinese se inicia, dividindo o citoplasma e completando a formação das duas células-filhas.",
-  }
+  },
 ];
 
 export function getRandomQuestions(count: number): Question[] {
