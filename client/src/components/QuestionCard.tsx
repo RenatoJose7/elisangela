@@ -66,10 +66,11 @@ export default function QuestionCard({
         visibility: isFlipped ? "visible" : "hidden",
         opacity: isFlipped ? 1 : 0,
         transition: "opacity 0.3s ease-in-out",
+        overflow: "auto",
       }}
     >
-      <div className="w-full" style={{ pointerEvents: "auto", padding: "1rem", display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
-        <div style={{ maxWidth: "600px", width: "100%", maxHeight: "90vh", overflow: "hidden" }}>
+      <div className="w-full" style={{ pointerEvents: "auto", padding: "1rem", display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "100%", paddingTop: "2rem", paddingBottom: "2rem" }}>
+        <div style={{ maxWidth: "600px", width: "100%", maxHeight: "calc(100vh - 4rem)", overflow: "auto" }}>
         <div
           className={`card-inner ${isFlipped ? "flipped" : ""}`}
           style={{ height: "100%" }}
@@ -82,7 +83,7 @@ export default function QuestionCard({
               background: "#0D0520",
               border: `3px solid ${categoryColor}`,
               boxShadow: `0 0 20px ${categoryColor}70, 0 0 40px ${categoryColor}40`,
-              height: "320px",
+              height: "280px",
             }}
           >
           <div
@@ -180,8 +181,11 @@ export default function QuestionCard({
             background: "#0A0318",
             border: `2px solid ${categoryColor}`,
             boxShadow: `0 0 15px ${categoryColor}50, 0 0 30px ${categoryColor}25`,
-            minHeight: "280px",
+            minHeight: "auto",
             height: "auto",
+            maxHeight: "calc(100vh - 6rem)",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           {/* Category header */}
@@ -246,7 +250,7 @@ export default function QuestionCard({
           </div>
 
           {/* Answer options */}
-          <div className="px-4 py-3 flex flex-col gap-2 overflow-y-auto" style={{ maxHeight: "250px" }}>
+          <div className="px-4 py-3 flex flex-col gap-2 overflow-y-auto flex-1" style={{ minHeight: "0" }}>
             {question.options.map((option, i) => {
               const isSelected = selectedAnswer === i;
               const isCorrect = i === question.correctIndex;
@@ -313,9 +317,10 @@ export default function QuestionCard({
                   }}
                 >
                   {/* Letter badge */}
-                  <span style={{ minWidth: "24px", fontSize: "0.85rem" }}
+                  <span
                     className="font-arcade flex-shrink-0"
                     style={{
+                      minWidth: "24px",
                       fontSize: "0.7rem",
                       color: labelColor,
                       textShadow: `0 0 5px ${labelColor}`,
@@ -326,7 +331,7 @@ export default function QuestionCard({
                   </span>
 
                   {/* Option text */}
-                  <span style={{ fontSize: "0.9rem" }}
+                  <span
                     className="font-orbitron flex-1"
                     style={{
                       fontSize: "0.9rem",
