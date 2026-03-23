@@ -324,12 +324,14 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
           </div>
           <button
             onClick={() => setIsSoundEnabled(!isSoundEnabled)}
-            className="font-arcade text-[10px] px-2 py-1 rounded border border-[#7B2FFF] transition-all"
+            className="font-arcade text-[10px] px-2 py-1 rounded border border-[#7B2FFF] transition-all hover:scale-105 active:scale-95"
             style={{
               color: isSoundEnabled ? "#00FF9F" : "#FF3366",
-              borderColor: isSoundEnabled ? "#00FF9F50" : "#FF336650",
-              background: "rgba(0,0,0,0.3)",
+              borderColor: isSoundEnabled ? "#00FF9F80" : "#FF336680",
+              background: isSoundEnabled ? "rgba(0,255,159,0.1)" : "rgba(255,51,102,0.1)",
               textShadow: `0 0 5px ${isSoundEnabled ? "#00FF9F" : "#FF3366"}`,
+              boxShadow: isSoundEnabled ? "0 0 8px #00FF9F30" : "0 0 8px #FF336630",
+              cursor: "pointer",
             }}
           >
             {isSoundEnabled ? "🔊 SOM: ON" : "🔇 SOM: OFF"}
