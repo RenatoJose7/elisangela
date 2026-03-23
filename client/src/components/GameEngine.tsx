@@ -140,7 +140,7 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
             specialSquareTriggered = specialSquare;
             if (specialSquare.type === "bonus") {
               playSound("bonus");
-              newPos = Math.min(newPos + 3, BOARD_SQUARES - 1);
+              newPos = Math.min(newPos + 1, BOARD_SQUARES - 1);
               updatedPlayers = updatedPlayers.map((p, i) =>
                 i === prev.currentPlayerIndex ? { ...p, position: newPos } : p
               );
