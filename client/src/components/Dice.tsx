@@ -99,8 +99,8 @@ export default function Dice({ value, isRolling, onRoll, disabled }: DiceProps) 
             isRolling ? "dice-rolling" : isLanding ? "dice-landing" : ""
           } ${canRoll ? "cursor-pointer" : "cursor-not-allowed"}`}
           style={{
-            width: 88,
-            height: 88,
+            width: 100,
+            height: 100,
             background: "linear-gradient(145deg, #1E0A40 0%, #0D0520 50%, #150830 100%)",
             border: `2px solid ${isRolling ? "#B44FFF" : value !== null ? "#7B2FFF" : "#7B2FFF60"}`,
             borderRadius: "14px",

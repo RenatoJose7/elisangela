@@ -41,7 +41,15 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
     playerSkipsTurn: false,
   });
 
-  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
+    const saved = localStorage.getItem("soundEnabled");
+    return saved !== null ? JSON.parse(saved) : true;
+  });
+
+  // Persistir estado de som
+  useEffect(() => {
+    localStorage.setItem("soundEnabled", JSON.stringify(isSoundEnabled));
+  }, [isSoundEnabled]);
 
   const [flashClass, setFlashClass] = useState("");
   const rollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -415,7 +423,7 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
         </div>
 
         {/* ── RIGHT: Controls ─────────────────────────────── */}
-        <div className="w-80 flex flex-col gap-2 overflow-y-auto" style={{ flexShrink: 0 }}>
+        <div className="flex flex-col gap-2 overflow-y-auto" style={{ flexShrink: 0, width: gameState.players.length >= 4 ? "280px" : "320px", maxHeight: "calc(100vh - 80px)" }}>
 
           {/* Player scoreboard */}
           <PlayerStatusPanel
@@ -459,29 +467,29 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
             <div className="p-4">
               {/* Dice section */}
               {(gameState.phase === "rolling" || gameState.phase === "moving") && (
-                <div className="flex flex-col items-center gap-4">
+                <div className="flex flex-col items-center gap-3">
                   {/* Turn indicator */}
-            <div
-              className="w-full py-2 px-3 rounded-sm text-center"
-              style={{
-                background: `rgba(${hexToRgb(currentPlayer.color)}, 0.1)`,
-                border: `1px solid ${currentPlayer.color}50`,
-              }}
-            >
-              <div
-                className="font-arcade"
+                    <div
+                className="w-full py-2 px-3 rounded-sm text-center"
                 style={{
-                  fontSize: "0.52rem",
-                  color: currentPlayer.color,
-                  textShadow: `0 0 8px ${currentPlayer.glowColor}`,
+                  background: `rgba(${hexToRgb(currentPlayer.color)}, 0.1)`,
+                  border: `1px solid ${currentPlayer.color}50`,
                 }}
               >
-                VEZ DE:
-              </div>
-              <div
-                className="font-vt323 mt-1"
-                style={{
-                  fontSize: "1.8rem",
+                <div
+                  className="font-arcade"
+                  style={{
+                    fontSize: "0.55rem",
+                    color: currentPlayer.color,
+                    textShadow: `0 0 8px ${currentPlayer.glowColor}`,
+                  }}
+                >
+                  VEZ DE:
+                </div>
+                <div
+                  className="font-vt323 mt-1"
+                  style={{
+                    fontSize: gameState.players.length >= 4 ? "1.6rem" : "1.8rem",
                         color: currentPlayer.glowColor,
                         textShadow: `0 0 10px ${currentPlayer.color}`,
                       }}
@@ -601,13 +609,13 @@ function PlayerStatusPanel({ players, currentPlayerIndex }: PlayerStatusPanelPro
       >
         <span
           className="font-arcade"
-          style={{ fontSize: "0.38rem", color: "#B0A0CC" }}
+          style={{ fontSize: "0.42rem", color: "#B0A0CC" }}
         >
           PLACAR
         </span>
       </div>
 
-      <div className="p-2.5 flex flex-col gap-1.5">
+      <div className="p-2 flex flex-col gap-1">
         {players.map((player, i) => {
           const isActive = i === currentPlayerIndex;
           const progress = (player.position / (BOARD_SQUARES - 1)) * 100;
@@ -615,7 +623,7 @@ function PlayerStatusPanel({ players, currentPlayerIndex }: PlayerStatusPanelPro
           return (
             <div
               key={player.id}
-              className="rounded-sm p-2 transition-all duration-300"
+              className="rounded-sm p-1.5 transition-all duration-300"
               style={{
                 background: isActive
                   ? `rgba(${hexToRgb(player.color)}, 0.1)`
@@ -624,7 +632,7 @@ function PlayerStatusPanel({ players, currentPlayerIndex }: PlayerStatusPanelPro
                 boxShadow: isActive ? `0 0 8px ${player.color}30` : "none",
               }}
             >
-              <div className="flex items-center gap-2 mb-1.5">
+              <div className="flex items-center gap-1.5 mb-1">
                 {/* Pawn */}
                 <div
                   className={`rounded-full flex-shrink-0 flex items-center justify-center font-arcade ${
@@ -647,7 +655,7 @@ function PlayerStatusPanel({ players, currentPlayerIndex }: PlayerStatusPanelPro
                   <div
                     className="font-arcade truncate flex items-center gap-1"
                     style={{
-                      fontSize: "0.36rem",
+                      fontSize: "0.40rem",
                       color: isActive ? player.color : "#A090C0",
                       textShadow: isActive ? `0 0 6px ${player.glowColor}` : "none",
                     }}
@@ -661,7 +669,7 @@ function PlayerStatusPanel({ players, currentPlayerIndex }: PlayerStatusPanelPro
                   </div>
                   <div
                     className="font-vt323"
-                    style={{ fontSize: "0.85rem", color: "#6050A0" }}
+                    style={{ fontSize: "0.90rem", color: "#6050A0" }}
                   >
                     Casa {player.position + 1}/{BOARD_SQUARES}
                   </div>
