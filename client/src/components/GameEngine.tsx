@@ -411,7 +411,7 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
       <div className="flex flex-1 gap-2 p-2 overflow-hidden">
 
         {/* ── LEFT: Placar ─────────────────────────── */}
-        <div className="flex flex-col gap-2 overflow-y-auto" style={{ flexShrink: 0, width: gameState.players.length >= 4 ? "280px" : "320px", maxHeight: "calc(100vh - 80px)" }}>
+        <div className="flex flex-col gap-2 overflow-y-auto" style={{ flexShrink: 0, width: gameState.players.length >= 4 ? "200px" : "220px", maxHeight: "calc(100vh - 80px)" }}>
           {/* Player scoreboard */}
           <PlayerStatusPanel
             players={gameState.players}
@@ -436,7 +436,7 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
         </div>
 
         {/* ── RIGHT: Controls (Dado) ─────────────────────────── */}
-        <div className="flex flex-col gap-2 overflow-y-auto" style={{ flexShrink: 0, width: "380px", maxHeight: "calc(100vh - 80px)" }}>
+        <div className="flex flex-col gap-2 overflow-y-auto" style={{ flexShrink: 0, width: "320px", maxHeight: "calc(100vh - 80px)" }}>
 
           {/* Dice / Card panel */}
           <div
@@ -472,32 +472,32 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
               </span>
             </div>
 
-            <div className="p-4 flex-1 flex flex-col items-center justify-center overflow-y-auto">
+            <div className="p-3 flex-1 flex flex-col items-center justify-center overflow-y-auto">
               {/* Dice section */}
               {(gameState.phase === "rolling" || gameState.phase === "moving") && (
-                <div className="flex flex-col items-center gap-4 w-full">
+                <div className="flex flex-col items-center gap-3 w-full">
                   {/* Turn indicator */}
+                  <div
+                    className="w-full py-2 px-2 rounded-sm text-center"
+                    style={{
+                      background: `rgba(${hexToRgb(currentPlayer.color)}, 0.1)`,
+                      border: `1px solid ${currentPlayer.color}50`,
+                    }}
+                  >
                     <div
-                className="w-full py-2 px-3 rounded-sm text-center"
-                style={{
-                  background: `rgba(${hexToRgb(currentPlayer.color)}, 0.1)`,
-                  border: `1px solid ${currentPlayer.color}50`,
-                }}
-              >
-                <div
-                  className="font-arcade"
-                  style={{
-                    fontSize: "0.55rem",
-                    color: currentPlayer.color,
-                    textShadow: `0 0 8px ${currentPlayer.glowColor}`,
-                  }}
-                >
-                  VEZ DE:
-                </div>
-                <div
-                  className="font-vt323 mt-1"
-                  style={{
-                    fontSize: gameState.players.length >= 4 ? "1.6rem" : "1.8rem",
+                      className="font-arcade"
+                      style={{
+                        fontSize: "0.45rem",
+                        color: currentPlayer.color,
+                        textShadow: `0 0 8px ${currentPlayer.glowColor}`,
+                      }}
+                    >
+                      VEZ DE:
+                    </div>
+                    <div
+                      className="font-vt323 mt-0.5"
+                      style={{
+                        fontSize: gameState.players.length >= 4 ? "1.3rem" : "1.5rem",
                         color: currentPlayer.glowColor,
                         textShadow: `0 0 10px ${currentPlayer.color}`,
                       }}
@@ -506,7 +506,7 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
                     </div>
                   </div>
 
-                  <div style={{ transform: "scale(1.3)", transformOrigin: "center" }}>
+                  <div style={{ transform: "scale(1.2)", transformOrigin: "center" }}>
                     <Dice
                       value={gameState.diceValue}
                       isRolling={gameState.isDiceRolling}
@@ -517,26 +517,25 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
 
                   {/* Position info */}
                   <div
-                    className="w-full py-2 px-3 rounded-sm"
+                    className="w-full py-1.5 px-2 rounded-sm text-center"
                     style={{
-                      background: "rgba(123,47,255,0.06)",
+                      background: "rgba(123,47,255,0.08)",
                       border: "1px solid #7B2FFF30",
                     }}
                   >
-                    <div className="flex justify-between items-center">
-                      <span
-                    className="font-arcade"
-                    style={{ fontSize: "0.48rem", color: "#7B2FFF80" }}
-                  >
-                    POSIÇÃO
-                  </span>
-                  <span
-                    className="font-vt323"
-                    style={{ fontSize: "1.5rem", color: "#E0AAFF" }}
-                      >
-                        {currentPlayer.position + 1} / {BOARD_SQUARES}
-                      </span>
+                    <div
+                      className="font-arcade text-xs"
+                      style={{ color: "#B0A0CC", fontSize: "0.32rem" }}
+                    >
+                      POSIÇÃO
                     </div>
+                    <div
+                      className="font-vt323 mt-0.5"
+                      style={{ color: "#00E5FF", fontSize: "0.75rem" }}
+                    >
+                      {currentPlayer.position + 1} / {BOARD_SQUARES}
+                    </div>
+                  </div>
                     {/* Mini progress bar */}
                     <div
                       className="w-full mt-1.5 rounded-full overflow-hidden"
@@ -608,7 +607,7 @@ function PlayerStatusPanel({ players, currentPlayerIndex }: PlayerStatusPanelPro
       }}
     >
       <div
-        className="px-4 py-2"
+        className="px-2 py-1"
         style={{
           background: "linear-gradient(90deg, rgba(123,47,255,0.2), transparent)",
           borderBottom: "1px solid #7B2FFF20",
@@ -616,13 +615,13 @@ function PlayerStatusPanel({ players, currentPlayerIndex }: PlayerStatusPanelPro
       >
         <span
           className="font-arcade"
-          style={{ fontSize: "0.42rem", color: "#B0A0CC" }}
+          style={{ fontSize: "0.32rem", color: "#B0A0CC" }}
         >
           PLACAR
         </span>
       </div>
 
-      <div className="p-2 flex flex-col gap-1">
+      <div className="p-1 flex flex-col gap-0.5">
         {players.map((player, i) => {
           const isActive = i === currentPlayerIndex;
           const progress = (player.position / (BOARD_SQUARES - 1)) * 100;
@@ -630,7 +629,7 @@ function PlayerStatusPanel({ players, currentPlayerIndex }: PlayerStatusPanelPro
           return (
             <div
               key={player.id}
-              className="rounded-sm p-1.5 transition-all duration-300"
+              className="rounded-sm p-1 transition-all duration-300"
               style={{
                 background: isActive
                   ? `rgba(${hexToRgb(player.color)}, 0.1)`
@@ -639,19 +638,19 @@ function PlayerStatusPanel({ players, currentPlayerIndex }: PlayerStatusPanelPro
                 boxShadow: isActive ? `0 0 8px ${player.color}30` : "none",
               }}
             >
-              <div className="flex items-center gap-1.5 mb-1">
+              <div className="flex items-center gap-1 mb-0.5">
                 {/* Pawn */}
                 <div
                   className={`rounded-full flex-shrink-0 flex items-center justify-center font-arcade ${
                     isActive ? "pawn-idle" : ""
                   }`}
                   style={{
-                    width: 20,
-                    height: 20,
+                    width: 18,
+                    height: 18,
                     background: `radial-gradient(circle at 35% 35%, ${player.glowColor}, ${player.color})`,
                     border: `1.5px solid ${player.glowColor}`,
                     boxShadow: isActive ? `0 0 6px ${player.glowColor}` : "none",
-                    fontSize: "0.32rem",
+                    fontSize: "0.28rem",
                     color: "#fff",
                   }}
                 >
@@ -662,7 +661,7 @@ function PlayerStatusPanel({ players, currentPlayerIndex }: PlayerStatusPanelPro
                   <div
                     className="font-arcade truncate flex items-center gap-1"
                     style={{
-                      fontSize: "0.40rem",
+                      fontSize: "0.32rem",
                       color: isActive ? player.color : "#A090C0",
                       textShadow: isActive ? `0 0 6px ${player.glowColor}` : "none",
                     }}
@@ -676,7 +675,7 @@ function PlayerStatusPanel({ players, currentPlayerIndex }: PlayerStatusPanelPro
                   </div>
                   <div
                     className="font-vt323"
-                    style={{ fontSize: "0.90rem", color: "#6050A0" }}
+                    style={{ fontSize: "0.70rem", color: "#6050A0" }}
                   >
                     Casa {player.position + 1}/{BOARD_SQUARES}
                   </div>
@@ -687,7 +686,7 @@ function PlayerStatusPanel({ players, currentPlayerIndex }: PlayerStatusPanelPro
               <div
                 className="w-full rounded-full overflow-hidden"
                 style={{
-                  height: 3,
+                  height: 2,
                   background: "rgba(123,47,255,0.12)",
                 }}
               >
