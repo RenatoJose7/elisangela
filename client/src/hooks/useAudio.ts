@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export function useAudio() {
+export function useAudio(isSoundEnabled: boolean = true) {
   useEffect(() => {
     // Criar elemento de áudio
     const audio = document.getElementById("background-music") as HTMLAudioElement;
@@ -21,24 +21,30 @@ export function useAudio() {
       
       document.body.appendChild(newAudio);
       
-      // Tentar reproduzir
-      newAudio.play().catch(() => {
-        // Se falhar, esperar por interação do usuário
-        const playOnInteraction = () => {
-          newAudio.play();
-          document.removeEventListener("click", playOnInteraction);
-        };
-        document.addEventListener("click", playOnInteraction);
-      });
+      // Tentar reproduzir se som estiver habilitado
+      if (isSoundEnabled) {
+        newAudio.play().catch(() => {
+          // Se falhar, esperar por interação do usuário
+          const playOnInteraction = () => {
+            newAudio.play();
+            document.removeEventListener("click", playOnInteraction);
+          };
+          document.addEventListener("click", playOnInteraction);
+        });
+      }
     } else {
-      // Se já existe, apenas garantir que está tocando
-      audio.play().catch(() => {
-        const playOnInteraction = () => {
-          audio.play();
-          document.removeEventListener("click", playOnInteraction);
-        };
-        document.addEventListener("click", playOnInteraction);
-      });
+      // Se já existe, controlar baseado no estado de som
+      if (isSoundEnabled) {
+        audio.play().catch(() => {
+          const playOnInteraction = () => {
+            audio.play();
+            document.removeEventListener("click", playOnInteraction);
+          };
+          document.addEventListener("click", playOnInteraction);
+        });
+      } else {
+        audio.pause();
+      }
     }
-  }, []);
+  }, [isSoundEnabled]);
 }

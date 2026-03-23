@@ -23,7 +23,18 @@ interface GameEngineProps {
 }
 
 export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) {
-  useAudio();
+  const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
+    const saved = localStorage.getItem("soundEnabled");
+    return saved !== null ? JSON.parse(saved) : true;
+  });
+
+  // Persistir estado de som
+  useEffect(() => {
+    localStorage.setItem("soundEnabled", JSON.stringify(isSoundEnabled));
+  }, [isSoundEnabled]);
+
+  useAudio(isSoundEnabled);
+
   const [gameState, setGameState] = useState<GameState>({
     phase: "rolling",
     players: initialPlayers,
@@ -40,16 +51,6 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
     specialSquareTriggered: null,
     playerSkipsTurn: false,
   });
-
-  const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
-    const saved = localStorage.getItem("soundEnabled");
-    return saved !== null ? JSON.parse(saved) : true;
-  });
-
-  // Persistir estado de som
-  useEffect(() => {
-    localStorage.setItem("soundEnabled", JSON.stringify(isSoundEnabled));
-  }, [isSoundEnabled]);
 
   const [flashClass, setFlashClass] = useState("");
   const rollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -406,10 +407,22 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
         </div>
       </div>
 
-      {/* ── Main Layout ──────────────────────────────────────────── */}
+      {/* ── Main Layout ─────────────────────────────── */}
       <div className="flex flex-1 gap-2 p-2 overflow-hidden">
 
-        {/* ── LEFT: Board ─────────────────────────────── */}
+        {/* ── LEFT: Placar ─────────────────────────── */}
+        <div className="flex flex-col gap-2 overflow-y-auto" style={{ flexShrink: 0, width: gameState.players.length >= 4 ? "280px" : "320px", maxHeight: "calc(100vh - 80px)" }}>
+          {/* Player scoreboard */}
+          <PlayerStatusPanel
+            players={gameState.players}
+            currentPlayerIndex={gameState.currentPlayerIndex}
+          />
+
+          {/* Phase legend */}
+          <PhaseLegend />
+        </div>
+
+        {/* ── CENTER: Board ─────────────────────────── */}
         <div className="flex-1 min-w-0 overflow-hidden">
           <SnakeBoard
             players={gameState.players}
@@ -422,22 +435,17 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
           />
         </div>
 
-        {/* ── RIGHT: Controls ─────────────────────────────── */}
-        <div className="flex flex-col gap-2 overflow-y-auto" style={{ flexShrink: 0, width: gameState.players.length >= 4 ? "280px" : "320px", maxHeight: "calc(100vh - 80px)" }}>
-
-          {/* Player scoreboard */}
-          <PlayerStatusPanel
-            players={gameState.players}
-            currentPlayerIndex={gameState.currentPlayerIndex}
-          />
+        {/* ── RIGHT: Controls (Dado) ─────────────────────────── */}
+        <div className="flex flex-col gap-2 overflow-y-auto" style={{ flexShrink: 0, width: "380px", maxHeight: "calc(100vh - 80px)" }}>
 
           {/* Dice / Card panel */}
           <div
-            className="rounded-sm overflow-hidden flex-1"
+            className="rounded-sm overflow-hidden flex-1 flex flex-col"
             style={{
               background: "rgba(8, 5, 20, 0.92)",
               border: "2px solid #7B2FFF",
               boxShadow: "0 0 15px #7B2FFF30",
+              minHeight: 0,
             }}
           >
             {/* Panel header */}
@@ -464,10 +472,10 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
               </span>
             </div>
 
-            <div className="p-4">
+            <div className="p-4 flex-1 flex flex-col items-center justify-center overflow-y-auto">
               {/* Dice section */}
               {(gameState.phase === "rolling" || gameState.phase === "moving") && (
-                <div className="flex flex-col items-center gap-3">
+                <div className="flex flex-col items-center gap-4 w-full">
                   {/* Turn indicator */}
                     <div
                 className="w-full py-2 px-3 rounded-sm text-center"
@@ -498,12 +506,14 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
                     </div>
                   </div>
 
-                  <Dice
-                    value={gameState.diceValue}
-                    isRolling={gameState.isDiceRolling}
-                    onRoll={handleRollDice}
-                    disabled={gameState.phase !== "rolling"}
-                  />
+                  <div style={{ transform: "scale(1.3)", transformOrigin: "center" }}>
+                    <Dice
+                      value={gameState.diceValue}
+                      isRolling={gameState.isDiceRolling}
+                      onRoll={handleRollDice}
+                      disabled={gameState.phase !== "rolling"}
+                    />
+                  </div>
 
                   {/* Position info */}
                   <div
@@ -560,9 +570,6 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
               )}
             </div>
           </div>
-
-          {/* Phase legend */}
-          <PhaseLegend />
         </div>
       </div>
 
