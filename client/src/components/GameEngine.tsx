@@ -556,16 +556,16 @@ export default function GameEngine({ initialPlayers, onExit }: GameEngineProps) 
 
               {/* Card section */}
               {isCardPhase && gameState.currentQuestion && (
-<QuestionCard
-            question={gameState.currentQuestion}
-            isFlipped={gameState.isCardFlipped}
-            onFlip={handleFlipCard}
-            selectedAnswer={gameState.selectedAnswer}
-            onSelectAnswer={handleSelectAnswer}
-            onTimeout={handleTimeout}
-            feedbackType={gameState.feedbackType}
-            disabled={gameState.phase !== "question"}
-          />
+                <QuestionCard
+                  question={gameState.currentQuestion}
+                  isFlipped={gameState.isCardFlipped}
+                  onFlip={handleFlipCard}
+                  selectedAnswer={gameState.selectedAnswer}
+                  onSelectAnswer={handleSelectAnswer}
+                  onTimeout={handleTimeout}
+                  feedbackType={gameState.feedbackType}
+                  disabled={gameState.phase !== "question"}
+                />
               )}
             </div>
           </div>
