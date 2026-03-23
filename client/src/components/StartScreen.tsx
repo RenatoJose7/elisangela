@@ -8,8 +8,7 @@ import { useState } from "react";
 import type { Player } from "../data/gameTypes";
 import { PLAYER_COLORS } from "../data/gameTypes";
 
-const HEADER_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/arcade-header-BUw6E3aA6mLs2v7XFf9rCZ.webp";
+const HEADER_URL = "/images/arcade-banner.jpg";
 
 const BG_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663455764094/i5Xqf5jxVFYckbTeTeoqYj/bg-cosmic-arcade-WLgksMn6LWzYEdmn4cs9Wr.webp";
